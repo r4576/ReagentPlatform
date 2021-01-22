@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -72,15 +74,38 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, '.key'), 'db_settings.json')
+db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
+db_database = db_info['client']['database']
+db_host = db_info['client']['host']
+db_port = db_info['client']['port']
+db_username=db_info['client']['username']
+db_password=db_info['client']['password']
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': db_database,
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': db_host,
+            'port': db_port,
+            'username': db_username,
+            'password': db_password,
+            'authSource': db_database,
+            'authMechanism': 'SCRAM-SHA-1'
+        },
+        'LOGGING': {
+            'version': 1,
+            'loggers': {
+                'djongo': {
+                    'level': 'DEBUG',
+                    'propagate': False,                        
+                }
+            },
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -119,36 +144,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-#database
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, '.key'), 'db_settings.json')
-db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
-db_database = db_info['client']['database']
-db_host = db_info['client']['host']
-db_port = db_info['client']['port']
-db_username=db_info['client']['username']
-db_password=db_info['client']['password']
-DATABASES = {
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': db_database,
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': db_host,
-            'port': db_port,
-            'username': db_username,
-            'password': db_password,
-            'authSource': db_database,
-            'authMechanism': 'SCRAM-SHA-1'
-        },
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propagate': False,                        
-                }
-            },
-        },
-    }
-}
