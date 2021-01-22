@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chemistry United Platform</title>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Chemi-Form</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarColor01"
+        aria-controls="navbarColor01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              >Content</a
+            >
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Reagent information</a>
+              <a class="dropdown-item" href="#">NMR Analysis</a>
+              <a class="dropdown-item" href="#">Computer Science's File</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Etc</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Members</a>
+          </li>
+          <li class="nav-item"></li>
+            <a class="nav-link" href="#">Contact Us</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0 pull-right" action=users method="GET">
+          <button
+            class="btn btn-secondary my-2 my-sm-0"
+            style="margin-right: 10px"
+          >
+            Login</button
+          ><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </form>
+      </div>
+    </nav>
+    
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h2>More Information! More Faster!</h2>
+        <p>여러분들의 레포트를 위해 시약정보를 빠르고 정확하게 보여줍니다.</p>
+        <p>
+          <a class="btn btn-primary btn-lg" href="#" role="button"
+          >How to use? &raquo;</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <form class="center-block" action=contents method="GET">
+        <div class="input-group input-group-lg well well-lg">
+          <input type="text" class="form-control" placeholder="Input Your Reagent Name. ex) CH3Cl or Sodium chloride">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary btn-success" type="button">
+              search
+              <span
+                class="glyphicon glyphicon-search"
+                aria-hidden="true"
+              ></span>
+            </button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    <hr />
+    
+    <div class="container">
+    <!-- Example row of columns -->
+      <section>
+        <img
+          src="images/temp.PNG"
+          class="center-block"
+          alt="test"
+          width="60%"
+        />
+      </section>
+    </div>
+
+    <hr />
+
+    <footer>
+      <p>&copy; neXt Company</p>
+    </footer>
+    <!-- /container -->
+    <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="/javascripts/index_function.js" type="text/javascript"></script>
+  </body>
+</html>
