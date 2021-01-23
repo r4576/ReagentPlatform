@@ -46,7 +46,7 @@ third_row_list = ['건강위험성','화재위험성','반응위험성','특수�
 fifth_row_list = ['반응성','부식성','피해야 할 조건','일반 증상','흡입','피부','안구','경구','기타']
 sixth_row_list = ['흡입','피부','안구','경구','기타']
 seventh_row_list = ['누출방제요령','화재진압요령','취급 및 저장 방법','취급시 주의사항','폐기시 주의사항']
-
+dataset_size = 6770
 file_path = "./service/dataset/material_safety_data.json"
 
 danger_table = pd.DataFrame(columns=['CAS No','물리화학적 성질:상태','물리화학적 성질:색상','물리화학적 성질:냄새','물리화학적 성질:맛','NFPA 위험성 코드:건강위험성 percent','NFPA 위험성 코드:화재위험성 percent','NFPA 위험성 코드:반응위험성 percent','NFPA 위험성 코드:특수위험성 percent','NFPA 위험성 코드:건강위험성','NFPA 위험성 코드:화재위험성','NFPA 위험성 코드:반응위험성',
@@ -56,7 +56,7 @@ danger_table = pd.DataFrame(columns=['CAS No','물리화학적 성질:상태','�
 # toyset = [1,10,100,500,1000,2000,3000,6000,7000]
 
 # for num in toyset:
-for num in range(1,6771):
+for num in range(1,dataset_size+1):
     response = requests.get('https://icis.me.go.kr/chmCls/chmClsView.do?hlhsn_sn=%d' %num)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -72,7 +72,7 @@ for num in range(1,6771):
     collected_data_list_4 = []
     for i in collected_data_list_3_4 :
         if any(int_type.isdigit() for int_type in i):
-            collected_data_list_3.append(i[0])
+            collected_data_list_3.append(int(i[0]))
             collected_data_list_4.append(i[2:])
         else :
             collected_data_list_3.append('자료없음')
@@ -86,6 +86,6 @@ for num in range(1,6771):
 
     danger_table.loc[num-1] = row_data
     if num % 50 == 0:
-        print("[",num,"/7232]")
+        print("[",num,"/",dataset_size, "]")
 
 danger_table.to_json(file_path, orient='records', force_ascii=False)
