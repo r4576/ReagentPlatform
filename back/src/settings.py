@@ -77,22 +77,18 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, '.key'), 'db_settings.json')
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
-db_database = db_info['client']['database']
-db_host = db_info['client']['host']
-db_port = db_info['client']['port']
-db_username=db_info['client']['username']
-db_password=db_info['client']['password']
+db_database = db_info['altas']['database']
+db_host = db_info['altas']['host']
+db_username=db_info['altas']['username']
+db_password=db_info['altas']['password']
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': db_database,
-        'ENFORCE_SCHEMA': False,
         'CLIENT': {
+            'name': db_database,
             'host': db_host,
-            'port': db_port,
             'username': db_username,
             'password': db_password,
-            'authSource': db_database,
             'authMechanism': 'SCRAM-SHA-1'
         },
         'LOGGING': {
