@@ -1,3 +1,8 @@
+#형구형 한테 open_file경로 질문
+#형구형 한테 debuginglist 질문
+
+
+import re
 import json
 import requests 
 from bs4 import BeautifulSoup
@@ -24,8 +29,11 @@ def row_data_processing(table_row_name,processed_table):
         for tr in processed_table :
             if table_row_name in tr.text:
                 index = tr.find("td").text
-                indexes = index_processing(index)
-                processed_index = "\n".join(indexes[1:])
+                if '·' in index:    
+                    indexes = index_processing(index)
+                    processed_index = "\n".join(indexes[1:])
+                else :
+                    return "자료없음"
             else :
                 pass
         return processed_index
@@ -47,13 +55,17 @@ fifth_row_list = ['반응성','부식성','피해야 할 조건','일반 증상'
 sixth_row_list = ['흡입','피부','안구','경구','기타']
 seventh_row_list = ['누출방제요령','화재진압요령','취급 및 저장 방법','취급시 주의사항','폐기시 주의사항']
 dataset_size = 6770
-file_path = "./service/dataset/material_safety_data.json"
+
+debuging_list = []
+
+file_path = "./material_safety_data.json"
+error_file_path = "./error_list.txt"
 
 danger_table = pd.DataFrame(columns=['CAS No','물리화학적 성질:상태','물리화학적 성질:색상','물리화학적 성질:냄새','물리화학적 성질:맛','NFPA 위험성 코드:건강위험성 percent','NFPA 위험성 코드:화재위험성 percent','NFPA 위험성 코드:반응위험성 percent','NFPA 위험성 코드:특수위험성 percent','NFPA 위험성 코드:건강위험성','NFPA 위험성 코드:화재위험성','NFPA 위험성 코드:반응위험성',
     'NFPA 위험성 코드:특수위험성','안전/반응 위험 특성:반응성(안전성, 산화성)','안전/반응 위험 특성:부식성','안전/반응 위험 특성:피해야 할 조건','인체 유해성:일반 증상','인체 유해성:흡입','인체 유해성:피부','인체 유해성:안구','인체 유해성:경구','인체 유해성:기타',
     '응급 조치 요령:흡입','응급 조치 요령:피부','응급 조치 요령:안구','응급 조치 요령:경구','응급 조치 요령:기타','사고 대응 정보:누출방제요령','사고 대응 정보:화재진압요령','취급 주의 정보:취급 및 저장 방법','취급 주의 정보:취급시 주의사항','취급 주의 정보:폐기시 주의사항'])
 
-# toyset = [1,10,100,500,1000,2000,3000,6000,7000]
+# toyset = [5,29,7000]
 
 # for num in toyset:
 for num in range(1,dataset_size+1):
@@ -71,12 +83,17 @@ for num in range(1,dataset_size+1):
     collected_data_list_3 = []
     collected_data_list_4 = []
     for i in collected_data_list_3_4 :
-        if any(int_type.isdigit() for int_type in i):
-            collected_data_list_3.append(int(i[0]))
-            collected_data_list_4.append(i[2:])
-        else :
+        list_num = re.findall("\d", i)
+        if len(re.findall("\d", i)) == 1 :
+            collected_data_list_3.append(int(list_num[0]))
+            collected_data_list_4.append(i)
+        elif len(re.findall("\d", i)) == 0 :
             collected_data_list_3.append('자료없음')
             collected_data_list_4.append(i)
+        else :
+            collected_data_list_3.append(int(list_num[0]))
+            collected_data_list_4.append(i)
+            debuging_list.append(num)
 
     collected_data_list_5 = data_collecting(fifth_row_list,'화재 및 폭발 위험 특성','응급 의학 정보')
     collected_data_list_6 = data_collecting(sixth_row_list,'응급 의학 정보','독성정보')
@@ -87,5 +104,10 @@ for num in range(1,dataset_size+1):
     danger_table.loc[num-1] = row_data
     if num % 50 == 0:
         print("[",num,"/",dataset_size, "]")
+    
 
 danger_table.to_json(file_path, orient='records', force_ascii=False)
+
+with open(error_file_path, "w") as f:
+    for line in debuging_list:
+        f.write(str(line) + '\n')
