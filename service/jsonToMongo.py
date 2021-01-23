@@ -1,14 +1,16 @@
 from pymongo import MongoClient
+import json
 
-client = MongoClient("mongodb+srv://next:nextproject@cluster0.myrfh.mongodb.net/ChemDatabase?retryWrites=true&w=majority")
-djongo_test = client['djongo_test']
-reagentPropertyData = djongo_test['api_reagentpropertydata']
-materialSafetyData = djongo_test['api_materialsafetydata']
 
-new_ReagentData = []
-new_SafetyData = []
+def save(collection, jsonFilePath):
+    client = MongoClient("mongodb+srv://next:nextproject@cluster0.myrfh.mongodb.net/ChemDatabase?retryWrites=true&w=majority")
+    database = client['ChemDatabase']
+    collection = database[collection]
 
-# json 파일을 읽어 new_ReagentData, new_SafetyData에 append
+    newData = json.dumps(jsonFilePath)
+    collection.insert_many(newData)
 
-reagentPropertyData.insert_many(new_ReagentData)
-materialSafetyData.insert_many(new_SafetyData)
+
+if __name__ is "__main__":
+    save(collection='api_reagentpropertydata', jsonFilePath='dataset/ReagentPropertyDataset.json')
+    save(collection='api_materialsafetydata', jsonFilePath='dataset/MaterialSafetyDataset.json')
