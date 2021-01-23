@@ -4,7 +4,7 @@
     "물리화학적 성질:색상" : "phyColor",
     "물리화학적 성질:냄새" : "phySmell",
     "물리화학적 성질:맛" : "phyTaste",
-    "NFPA 위험성 코드:건강위험성 percent" : "NFPAHealthNumr",
+    "NFPA 위험성 코드:건강위험성 percent" : "NFPAHealthNum",
     "NFPA 위험성 코드:화재위험성 percent" : "NFPAFireNum",
     "NFPA 위험성 코드:반응위험성 percent" : "NFPAReactionNum",
     "NFPA 위험성 코드:특수위험성 percent" : "NFPASpecialNum",
@@ -30,5 +30,5 @@
     "사고 대응 정보:화재진압요령" : "accFire",
     "취급 주의 정보:취급 및 저장 방법" : "treStorage",
     "취급 주의 정보:취급시 주의사항" : "treTreatcaution",
-    "취급 주의 정보:폐기시 주의사항" : "treDisposa"
+    "취급 주의 정보:폐기시 주의사항" : "treDisposal"
 }
