@@ -65,10 +65,10 @@ danger_table = pd.DataFrame(columns=['CAS No','물리화학적 성질:상태','�
     'NFPA 위험성 코드:특수위험성','안전/반응 위험 특성:반응성(안전성, 산화성)','안전/반응 위험 특성:부식성','안전/반응 위험 특성:피해야 할 조건','인체 유해성:일반 증상','인체 유해성:흡입','인체 유해성:피부','인체 유해성:안구','인체 유해성:경구','인체 유해성:기타',
     '응급 조치 요령:흡입','응급 조치 요령:피부','응급 조치 요령:안구','응급 조치 요령:경구','응급 조치 요령:기타','사고 대응 정보:누출방제요령','사고 대응 정보:화재진압요령','취급 주의 정보:취급 및 저장 방법','취급 주의 정보:취급시 주의사항','취급 주의 정보:폐기시 주의사항'])
 
-toyset = [5,29,7000]
+# toyset = [5,29,7000]
 
-for num in toyset:
-# for num in range(1,dataset_size+1):
+# for num in toyset:
+for num in range(1,dataset_size+1):
     response = requests.get('https://icis.me.go.kr/chmCls/chmClsView.do?hlhsn_sn=%d' %num)
     soup = BeautifulSoup(response.content, 'html.parser')
 
