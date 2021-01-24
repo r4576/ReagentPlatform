@@ -1,4 +1,3 @@
-// import "node_modules/bootswatch/dist/[theme]/bootstrap.min.css";
 var express = require("express");
 var router = express.Router();
 
