@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from api.models import MolecularData
-from api.serializers import MolecularSerializer
+from api.models import MaterialSafetyData, ReagentPropertyData
+from api.serializers import MaterialSafetyDataSerializer, ReagentPropertyDataSerializer
 from datetime import datetime
 
 
@@ -18,8 +18,8 @@ class Search(APIView):
         }
         
         for keyword in keywords.split(','):
-            queryset = MolecularData.objects.filter(formula=keyword)
-            serializer = MolecularSerializer(queryset, many=True)
+            queryset = MaterialSafetyData.objects.filter(casNo=keyword)
+            serializer = MaterialSafetyDataSerializer(queryset, many=True)
             if serializer.data:
                 response['OK'].append(keyword)
                 response['Result'].append(serializer.data[0])

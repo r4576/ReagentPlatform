@@ -84,8 +84,8 @@ db_password=db_info['altas']['password']
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
+        'NAME': db_database,
         'CLIENT': {
-            'name': db_database,
             'host': db_host,
             'username': db_username,
             'password': db_password,
