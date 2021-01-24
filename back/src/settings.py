@@ -16,6 +16,7 @@ import djongo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'api.apps.ApiConfig',
 ]
 
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -75,7 +78,7 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Database
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, '.key'), 'db_settings.json')
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
 db_database = db_info['altas']['database']
 db_host = db_info['altas']['host']
@@ -84,8 +87,8 @@ db_password=db_info['altas']['password']
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
+        'NAME': db_database,
         'CLIENT': {
-            'name': db_database,
             'host': db_host,
             'username': db_username,
             'password': db_password,
@@ -102,6 +105,18 @@ DATABASES = {
         },
     }
 }
+
+# Cors setting
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost:80',
+]
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ALLOW_METHODS = (
+    'GET',
+    'POST',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
