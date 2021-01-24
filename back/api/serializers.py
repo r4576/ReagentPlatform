@@ -1,4 +1,5 @@
 from rest_meets_djongo.serializers import DjongoModelSerializer
+
 from api.models import MaterialSafetyData, ReagentPropertyData
 
 
@@ -12,3 +13,4 @@ class MaterialSafetyDataSerializer(DjongoModelSerializer):
     class Meta:
         model = MaterialSafetyData
         fields = '__all__'
+
