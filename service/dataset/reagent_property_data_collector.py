@@ -110,46 +110,52 @@ class Crawling_data_table(Table):
                 pass
 
 
-Crawling_wiki_link_table = Crawling_link_table('https://en.wikipedia.org/wiki/List_of_CAS_numbers_by_chemical_compound','wikitable') 
+Crawling_wiki_link_table = Crawling_link_table('https://en.wikipedia.org/wiki/Glossary_of_chemical_formulae','wikitable') 
 Crawling_table_list = Crawling_wiki_link_table.get_table_list()
 Crawling_table_url_list = Crawling_wiki_link_table.get_url_list(Crawling_table_list)
 
 
-
 filedata_list = []
 
-for i in range(10):
-    Crawling_url = 'https://en.wikipedia.org%s' %Crawling_table_url_list[i]
-    #for 문으로 리스트 내의 모든 데이터 실행
+# toyset = [0,5,29,50,1600]
 
-    Crawling_wiki_data_table = Crawling_data_table(Crawling_url, 'infobox bordered')
-    # Crawling_wiki_data_table = Crawling_data_table('https://en.wikipedia.org/wiki/Gold(III)_iodide','infobox bordered')
+try:
+    # for i in toyset:
+    for i in range(len(Crawling_table_url_list)):
+        Crawling_url = 'https://en.wikipedia.org%s' %Crawling_table_url_list[i]
 
-    # print(Crawling_wiki_data_table.get_CAS_no())
-    # print(Crawling_wiki_data_table.get_data('Density'))
-    # print(Crawling_wiki_data_table.get_data('Melting point'))
-    # print(Crawling_wiki_data_table.get_data('Boiling point'))
-    # print(Crawling_wiki_data_table.get_data('Chemical formula'))
-    # print(Crawling_wiki_data_table.get_Name())
+        Crawling_wiki_data_table = Crawling_data_table(Crawling_url, 'infobox bordered')
+        # Crawling_wiki_data_table = Crawling_data_table('https://en.wikipedia.org/wiki/Gold(III)_iodide','infobox bordered')
 
-    file_data = OrderedDict()
-    colunm_list = ["casNo", "name" , "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
+        # print(Crawling_wiki_data_table.get_CAS_no())
+        # print(Crawling_wiki_data_table.get_data('Density'))
+        # print(Crawling_wiki_data_table.get_data('Melting point'))
+        # print(Crawling_wiki_data_table.get_data('Boiling point'))
+        # print(Crawling_wiki_data_table.get_data('Chemical formula'))
+        # print(Crawling_wiki_data_table.get_Name())
 
-    file_data[colunm_list[0]] = Crawling_wiki_data_table.get_CAS_no()
-    file_data[colunm_list[1]] = Crawling_wiki_data_table.get_Name()
-    file_data[colunm_list[2]] = Crawling_wiki_data_table.get_data('Chemical formula')
-    file_data[colunm_list[3]] = Crawling_wiki_data_table.get_data('Molar mass')
-    file_data[colunm_list[4]] = Crawling_wiki_data_table.get_data('Melting point')
-    file_data[colunm_list[5]] = Crawling_wiki_data_table.get_data('Boiling point')
-    file_data[colunm_list[6]] = Crawling_wiki_data_table.get_data('Density')
+        file_data = OrderedDict()
+        colunm_list = ["casNo", "name" , "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
 
-    filedata_list.append(json.dumps(file_data, ensure_ascii=False))
-    print(1)
 
+        file_data[colunm_list[0]] = Crawling_wiki_data_table.get_CAS_no()
+        file_data[colunm_list[1]] = Crawling_wiki_data_table.get_Name()
+        file_data[colunm_list[2]] = Crawling_wiki_data_table.get_data('Chemical formula')
+        file_data[colunm_list[3]] = Crawling_wiki_data_table.get_data('Molar mass')
+        file_data[colunm_list[4]] = Crawling_wiki_data_table.get_data('Melting point')
+        file_data[colunm_list[5]] = Crawling_wiki_data_table.get_data('Boiling point')
+        file_data[colunm_list[6]] = Crawling_wiki_data_table.get_data('Density')
+
+        filedata_list.append(file_data)
+        # filedata_list.append(json.dumps(file_data, ensure_ascii=False))
+
+        if i % 50 == 0:
+            print("[",i,"/",1600, "]")
+except:
+    pass
 
 
 file_path = "./Reagent_property_data.json"
-jsontype_filedata_list = json.dumps(filedata_list, ensure_ascii=False)
 
 with open(file_path, 'w', encoding = 'utf-8') as make_file:
-    json.dump(jsontype_filedata_list, make_file, ensure_ascii=False)
+    json.dump(filedata_list, make_file, ensure_ascii=False)
