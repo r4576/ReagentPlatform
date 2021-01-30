@@ -50,3 +50,4 @@ class MaterialSafetyData(models.Model):
     treStorage = models.TextField()
     treTreatcaution = models.TextField()
     treDisposal = models.TextField()
+    

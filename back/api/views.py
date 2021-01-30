@@ -20,6 +20,7 @@ class Search(APIView):
         for keyword in keywords.split(','):
             queryset = MaterialSafetyData.objects.filter(casNo=keyword)
             serializer = MaterialSafetyDataSerializer(queryset, many=True)
+
             if serializer.data:
                 response['OK'].append(keyword)
                 response['Result'].append(serializer.data[0])
