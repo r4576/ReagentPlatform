@@ -17,3 +17,4 @@ class MaterialSafetyDataSerializer(DjongoModelSerializer):
     class Meta:
         model = MaterialSafetyData
         fields = '__all__'
+
