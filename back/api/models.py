@@ -1,12 +1,19 @@
 from djongo import models
 
 
+class Keyword(models.Model):
+    objects = models.DjongoManager()
+
+    id = models.ObjectIdField(db_column='_id', primary_key=True)
+    keyword = models.TextField()
+    casNo = models.TextField()
+
+
 class ReagentPropertyData(models.Model):
     objects = models.DjongoManager()
 
     id = models.ObjectIdField(db_column='_id', primary_key=True)
     casNo = models.TextField()
-    name = models.TextField()
     formula = models.TextField()
     molecularWeight = models.TextField()
     meltingpoint = models.TextField()
