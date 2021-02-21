@@ -24,17 +24,20 @@ class Search(APIView):
             newData = {} 
             newData['Keyword'] = keyword
 
-            newCasID = getCasID(keyword)
-            if newCasID:
-                newData['ReagentData'] = getReagentPropertyData(newCasID)
-                newData['MaterialSafetyData'] = getMarterialSafetyData(newCasID)
+            name, casID = getCasID(keyword)
+            if casID:
+                newData['Name'] = name
+                newData['ReagentData'] = getReagentPropertyData(casID)
+                newData['MaterialSafetyData'] = getMarterialSafetyData(casID)
                 print("[ /api/search?keyword={} ] {} found in database 200_OK".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             else:
-                newReagentData, newMaterialSafetyData = getNewData(keyword)
+                newName, newReagentData, newMaterialSafetyData = getNewData(keyword)
                 if newReagentData:
+                    newData['Name'] = newName
                     newData['ReagentData'] = newReagentData
                     newData['MaterialSafetyData'] = newMaterialSafetyData
                 else:
+                    newData['Name'] = None
                     newData['ReagentData'] = None
                     newData['MaterialSafetyData'] = None
                     print("[ /api/search?keyword={} ] {} 404_NotFound".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
@@ -45,12 +48,12 @@ class Search(APIView):
 
 
 def getCasID(keyword):
-    queryset = Keyword.objects.filter(mainKeyword=keyword)
+    queryset = Keyword.objects.filter(keyword=keyword)
     serializer = KeywordSerializer(queryset, many=True)
     if serializer.data:
-        return serializer.data[0]['casNo']
+        return serializer.data[0]['mainKeyword'], serializer.data[0]['casNo']
     else:
-        return None
+        return None, None
 
 def getReagentPropertyData(casNo):
     queryset = ReagentPropertyData.objects.filter(casNo=casNo)
@@ -87,5 +90,5 @@ def getNewData(keyword):
             print("[ /api/search?keyword={} ] {} {} is added to Reagent Property Collections".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), newMainName))
         reagentPropertyData = getReagentPropertyData(newCasID)
         materialSatetyData = getMarterialSafetyData(newCasID)
-        return reagentPropertyData, materialSatetyData
-    return None, None
+        return newMainName, reagentPropertyData, materialSatetyData
+    return None, None, None
