@@ -7,6 +7,7 @@ class KeywordSerializer(DjongoModelSerializer):
         model = Keyword
         fields = '__all__'
 
+
 class ReagentPropertyDataSerializer(DjongoModelSerializer):
     class Meta:
         model = ReagentPropertyData
