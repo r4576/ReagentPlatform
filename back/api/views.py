@@ -34,7 +34,6 @@ class Search(APIView):
                 if newReagentData:
                     newData['ReagentData'] = newReagentData
                     newData['MaterialSafetyData'] = newMaterialSafetyData
-                    print("[ /api/search?keyword={} ] {} added to database 200_OK".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
                 else:
                     newData['ReagentData'] = None
                     newData['MaterialSafetyData'] = None
@@ -70,22 +69,23 @@ def getMarterialSafetyData(casNo):
         return None
 
 def getNewData(keyword):
-    nameList = get_query(keyword)
-    if nameList:
-        mainName = nameList[0]
-        newReagentData = get_Table_data(mainName)
-        if newReagentData:
-            newCasID = newReagentData['casNo']
-            for name in nameList:
-                Keyword.objects.create(mainKeyword=mainName, keyword=name, casNo=newCasID)
-            ReagentPropertyData.objects.create( casNo=newReagentData['casNo'], 
-                                                formula=newReagentData['formula'], 
-                                                molecularWeight=newReagentData['molecularWeight'], 
-                                                meltingpoint=newReagentData['meltingpoint'], 
-                                                boilingpoint=newReagentData['boilingpoint'], 
+    newReagentData = get_Table_data(keyword)
+    if newReagentData:
+        newCasID = newReagentData['casNo']
+        newMainName = newReagentData['name']
+        for name in get_query(newMainName):
+            if not Keyword.objects.filter(keyword=name):
+                Keyword.objects.create(mainKeyword=newMainName, keyword=name, casNo=newCasID)
+                print("[ /api/search?keyword={} ] {} {} is added to Keyword collections".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), name))
+        if not ReagentPropertyData.objects.filter(casNo=newCasID):
+            ReagentPropertyData.objects.create( casNo=newCasID, \
+                                                formula=newReagentData['formula'], \
+                                                molecularWeight=newReagentData['molecularWeight'], \
+                                                meltingpoint=newReagentData['meltingpoint'], \
+                                                boilingpoint=newReagentData['boilingpoint'], \
                                                 density=newReagentData['density'] )
-            materialSatetyData = getMarterialSafetyData(newCasID)
-            return newReagentData, materialSatetyData
-        return None, None
-    else:
-        return None, None
+            print("[ /api/search?keyword={} ] {} {} is added to Reagent Property Collections".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), newMainName))
+        reagentPropertyData = getReagentPropertyData(newCasID)
+        materialSatetyData = getMarterialSafetyData(newCasID)
+        return reagentPropertyData, materialSatetyData
+    return None, None
