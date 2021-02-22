@@ -1,7 +1,6 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-import re
 
 
 def recall_json_api(url):
@@ -19,26 +18,34 @@ def get_PropertyTable_data(query):
 
 
 def data_processingMB(datalist):
-    originaldata = datalist
+    datanumber_list = []
     seconddata = []
-    for i, v in enumerate(originaldata):
+    for i, v in enumerate(datalist):
         if "C" in v:
-            pass
+            if '(' in v:
+                datanumber_list.append(i)
+            else:
+                pass
         else:
-            seconddata.append(datalist.pop(i))
+            datanumber_list.append(i)
+    for i in reversed(datanumber_list) :
+        seconddata.append(datalist.pop(i))
     return datalist + seconddata
 
 
 def data_processingD(datalist):
-    originaldata = datalist
+    datanumber_list = []
     seconddata = []
-    for i, v in enumerate(originaldata):
+    for i, v in enumerate(datalist):
         if "g" in v:
-            pass
-        if "C" in v:
-            pass
+            if '(' in v:
+                datanumber_list.append(i)
+            else:
+                pass
         else:
-            seconddata.append(datalist.pop(i))
+            datanumber_list.append(i)
+    for i in reversed(datanumber_list) :
+        seconddata.append(datalist.pop(i))
     return datalist + seconddata
 
 
@@ -69,6 +76,7 @@ def get_MeltingPoint(cid):
         return data_processingMB(MP_datalist)[0]
     except:
         return None
+
 
 def get_BoilingPoint(cid):
     try:
@@ -155,4 +163,3 @@ def get_query(name):
 
 # print(get_query("Water"))
 # print(get_Table_data("Water"))
-
