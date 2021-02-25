@@ -140,26 +140,33 @@ def get_CAS(cid):
 
 
 def get_Table_data(name):
-    dict_properties = get_PropertyTable_data(name)
-    CID = dict_properties.pop("CID")
-    file_data = {}
-    colunm_list = ["casNo", "name" , "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
-    file_data[colunm_list[0]] = get_CAS(CID)
-    file_data[colunm_list[1]] = get_commonname(CID)
-    file_data[colunm_list[2]] = dict_properties['MolecularFormula']
-    file_data[colunm_list[3]] = str(dict_properties['MolecularWeight'])
-    file_data[colunm_list[4]] = get_MeltingPoint(CID)
-    file_data[colunm_list[5]] = get_BoilingPoint(CID)
-    file_data[colunm_list[6]] = get_Density(CID)
+    try :
+        dict_properties = get_PropertyTable_data(name)
+        CID = dict_properties.pop("CID")
+        file_data = {}
+        colunm_list = ["casNo", "name" , "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
+        file_data[colunm_list[0]] = get_CAS(CID)
+        file_data[colunm_list[1]] = get_commonname(CID)
+        file_data[colunm_list[2]] = dict_properties['MolecularFormula']
+        file_data[colunm_list[3]] = str(dict_properties['MolecularWeight'])
+        file_data[colunm_list[4]] = get_MeltingPoint(CID)
+        file_data[colunm_list[5]] = get_BoilingPoint(CID)
+        file_data[colunm_list[6]] = get_Density(CID)
+
+    except:
+        file_data = [name]
     return file_data
 
 
 def get_query(name):
-    url = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/synonyms/json' %name
-    jsonfile = recall_json_api(url)
-    query_list = jsonfile.get("InformationList").get("Information")[0].get("Synonym")
+    try:
+        url = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/synonyms/json' %name
+        jsonfile = recall_json_api(url)
+        query_list = jsonfile.get("InformationList").get("Information")[0].get("Synonym")
+    except:
+        query_list = None
     return query_list
 
 
 # print(get_query("Water"))
-# print(get_Table_data("Water"))
+# print(get_Table_data("water"))
