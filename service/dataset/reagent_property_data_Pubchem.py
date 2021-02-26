@@ -154,7 +154,7 @@ def get_Table_data(name):
         file_data[colunm_list[6]] = get_Density(CID)
 
     except:
-        file_data = [name]
+        file_data = None
     return file_data
 
 
@@ -168,5 +168,6 @@ def get_query(name):
     return query_list
 
 
-# print(get_query("Water"))
+#  print(ge4rt_query("Water"))
 # print(get_Table_data("water"))
+# print(get_Table_data("wat"))
