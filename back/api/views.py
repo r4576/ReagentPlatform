@@ -13,7 +13,7 @@ class Search(APIView):
 
         collector = Collector()
         for keyword in keywords.split(','):
-            collector.findData(keyword)
+            collector.execute(keyword)
             response.append(collector.data)
 
         return Response(response, status=status.HTTP_200_OK)

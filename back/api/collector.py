@@ -40,12 +40,8 @@ class Collector:
 
     @property
     def data(self):
-        if self.__casNo:
-            return self.__data
-        else:
-            print("[ InternalServerError ] {} call findData function first".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            return None
-
+        return self.__data
+        
     @data.setter
     def data(self, keyword):
         self.__keyword = keyword
@@ -54,7 +50,7 @@ class Collector:
         self.__data['ReagentProperty'] = self.__getReagentProperty()
         self.__data['MaterialSafety'] = self.__getMaterialSafety()
 
-    def findData(self, keyword):
+    def execute(self, keyword):
         self.initializeData()
         self.data = keyword
 
@@ -67,11 +63,17 @@ class Collector:
             return serializer.data[0]['mainName']
         else:
             self.__getDataFromPubchem()
-            for name in self.__pubchemData['Synonym']:
-                if not Synonym.objects.filter(subName=name):
-                    Synonym.objects.create(mainName=self.__pubchemData['ReagentProperty']['name'], subName=name, casNo=self.__pubchemData['ReagentProperty']['casNo'])
-            self.__casNo = self.__pubchemData['ReagentProperty']['casNo']
-            return self.__getName()
+            if self.__pubchemData['Synonym']:
+                if not self.__keyword in self.__pubchemData['Synonym']:
+                    self.__pubchemData['Synonym'].append(self.__keyword)
+                for name in self.__pubchemData['Synonym']:
+                    if not Synonym.objects.filter(subName=name):
+                        Synonym.objects.create(mainName=self.__pubchemData['ReagentProperty']['name'], subName=name, casNo=self.__pubchemData['ReagentProperty']['casNo'])
+                self.__casNo = self.__pubchemData['ReagentProperty']['casNo']
+                return self.__getName()
+            else:
+                print("[ /api/search?keyword={} ] {} No Synonym Data HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                return None
             
     def __getReagentProperty(self):
         queryset = ReagentPropertyData.objects.filter(casNo=self.__casNo)
@@ -81,14 +83,17 @@ class Collector:
             return serializer.data[0]
         else:
             self.__getDataFromPubchem()
-            print(self.__pubchemData['ReagentProperty'])
-            ReagentPropertyData.objects.create( casNo=self.__pubchemData['ReagentProperty']['casNo'], \
-                                                formula=self.__pubchemData['ReagentProperty']['formula'], \
-                                                molecularWeight=self.__pubchemData['ReagentProperty']['molecularWeight'], \
-                                                meltingpoint=self.__pubchemData['ReagentProperty']['meltingpoint'], \
-                                                boilingpoint=self.__pubchemData['ReagentProperty']['boilingpoint'], \
-                                                density=self.__pubchemData['ReagentProperty']['density'] )
-            return self.__getReagentProperty()
+            if self.__pubchemData['ReagentProperty']:
+                ReagentPropertyData.objects.create( casNo=self.__pubchemData['ReagentProperty']['casNo'], \
+                                                    formula=self.__pubchemData['ReagentProperty']['formula'], \
+                                                    molecularWeight=self.__pubchemData['ReagentProperty']['molecularWeight'], \
+                                                    meltingpoint=self.__pubchemData['ReagentProperty']['meltingpoint'], \
+                                                    boilingpoint=self.__pubchemData['ReagentProperty']['boilingpoint'], \
+                                                    density=self.__pubchemData['ReagentProperty']['density'] )
+                return self.__getReagentProperty()
+            else:
+                print("[ /api/search?keyword={} ] {} No Reagent Property Data HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+                return None
 
     def __getMaterialSafety(self):
         queryset = MaterialSafetyData.objects.filter(casNo=self.__casNo)
@@ -104,8 +109,6 @@ class Collector:
         if not self.__pubchemData['Synonym']:
             print("[ /api/search?keyword={} ] {} get Synonyms from Pubchem".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             self.__pubchemData['Synonym'] = get_query(self.__keyword)
-            if not self.__keyword in self.__pubchemData['Synonym']:
-                self.__pubchemData['Synonym'].append(self.__keyword)
         if not self.__pubchemData['ReagentProperty']:
             print("[ /api/search?keyword={} ] {} get Reagent Property from Pubchem".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             self.__pubchemData['ReagentProperty'] = get_Table_data(self.__keyword)
