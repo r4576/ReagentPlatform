@@ -1,10 +1,10 @@
 from rest_meets_djongo.serializers import DjongoModelSerializer
-from api.models import Keyword, MaterialSafetyData, ReagentPropertyData
+from api.models import Synonym, MaterialSafetyData, ReagentPropertyData
 
 
-class KeywordSerializer(DjongoModelSerializer):
+class SynonymSerializer(DjongoModelSerializer):
     class Meta:
-        model = Keyword
+        model = Synonym
         fields = '__all__'
 
 

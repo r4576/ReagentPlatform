@@ -1,12 +1,12 @@
 from djongo import models
 
 
-class Keyword(models.Model):
+class Synonym(models.Model):
     objects = models.DjongoManager()
 
     id = models.ObjectIdField(db_column='_id', primary_key=True)
-    mainKeyword = models.TextField()
-    keyword = models.TextField()
+    subName = models.TextField()
+    mainName = models.TextField()
     casNo = models.TextField()
 
 
