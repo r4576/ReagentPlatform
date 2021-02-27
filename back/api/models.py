@@ -1,12 +1,20 @@
 from djongo import models
 
 
+class Synonym(models.Model):
+    objects = models.DjongoManager()
+
+    id = models.ObjectIdField(db_column='_id', primary_key=True)
+    subName = models.TextField()
+    mainName = models.TextField()
+    casNo = models.TextField()
+
+
 class ReagentPropertyData(models.Model):
     objects = models.DjongoManager()
 
     id = models.ObjectIdField(db_column='_id', primary_key=True)
     casNo = models.TextField()
-    name = models.TextField()
     formula = models.TextField()
     molecularWeight = models.TextField()
     meltingpoint = models.TextField()
