@@ -14,7 +14,7 @@ class Search(APIView):
         collector = Collector()
         for keyword in keywords.split(','):
             collector.execute(keyword)
-            response.append(collector.data)
+            response.append(collector.data.copy())
 
         return Response(response, status=status.HTTP_200_OK)
 
