@@ -11,6 +11,8 @@ from api.models import Synonym, MaterialSafetyData, ReagentPropertyData
 from api.serializers import SynonymSerializer, MaterialSafetyDataSerializer, ReagentPropertyDataSerializer
 from datetime import datetime
 
+from tasks import createSynonyms
+
 
 class Collector:
     def __init__(self):
@@ -27,11 +29,11 @@ class Collector:
         self.__pubchemData = { 
             'ReagentProperty' : { 
                 'Status'   : None,
-                'Contents' : {} 
+                'Contents' : { } 
             },
             'Synonym' : { 
                 'Status'   : None,
-                'Contents' : [] 
+                'Contents' : [ ] 
             }
         }
         
@@ -72,12 +74,10 @@ class Collector:
             print("[ /api/search?keyword={} ] {} No Synonym Data from Database HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             self.__getDataFromPubchem()
             if self.__pubchemData['Synonym']['Status'] == status.HTTP_200_OK:
-                if not self.__keyword in self.__pubchemData['Synonym']['Contents']:
-                    self.__pubchemData['Synonym']['Contents'].append(self.__keyword)
-                for name in self.__pubchemData['Synonym']['Contents']:
-                    if not Synonym.objects.filter(subName=name):
-                        Synonym.objects.create(mainName=self.__pubchemData['ReagentProperty']['Contents']['name'], subName=name, casNo=self.__pubchemData['ReagentProperty']['Contents']['casNo'])
                 self.__casNo = self.__pubchemData['ReagentProperty']['Contents']['casNo']
+                if not Synonym.objects.filter(subName=self.__keyword):
+                    Synonym.objects.create(mainName=self.__pubchemData['ReagentProperty']['Contents']['name'], subName=self.__keyword, casNo=self.__casNo)
+                createSynonyms.delay(self.__pubchemData['ReagentProperty']['Contents']['name'], self.__pubchemData['Synonym']['Contents'], self.__casNo)
                 return self.__getName()
             elif self.__pubchemData['Synonym']['Status'] == status.HTTP_404_NOT_FOUND:
                 print("[ /api/search?keyword={} ] {} No Synonym Data from Pubchem HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
@@ -129,6 +129,7 @@ class Collector:
             else:
                 self.__pubchemData['Synonym']['Status'] = status.HTTP_404_NOT_FOUND
             self.__pubchemData['Synonym']['Contents'] = synonym
+
         if self.__pubchemData['ReagentProperty']['Status'] is None:
             print("[ /api/search?keyword={} ] {} Get Reagent Property Data from Pubchem".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
             reagent = get_Table_data(self.__keyword)
