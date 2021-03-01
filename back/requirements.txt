@@ -10,3 +10,4 @@ python-dateutil==2.8.1
 rest-meets-djongo==0.0.13
 sqlparse==0.2.4
 dnspython==2.1.0
+celery=5.0.5
