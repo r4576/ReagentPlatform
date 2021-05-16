@@ -6,9 +6,10 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var reagentRouter = require("./routes/reagent");
-var nmrRouter = require("./routes/nmr");
-var catalystRouter = require("./routes/catalyst");
+var contentRouter = require("./routes/content");
+// var reagentRouter = require("./routes/reagent");
+// var nmrRouter = require("./routes/nmr");
+// var catalystRouter = require("./routes/catalyst");
 
 var app = express();
 
@@ -24,9 +25,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/reagent", reagentRouter);
-app.use("/nmr", nmrRouter);
-app.use("/catalyst", catalystRouter);
+app.use("/content", contentRouter);
+// app.use("/reagent", reagentRouter);
+// app.use("/nmr", nmrRouter);
+// app.use("/catalyst", catalystRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
