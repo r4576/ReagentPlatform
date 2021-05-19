@@ -9,8 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+
     <title>SB Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
@@ -32,6 +31,13 @@
       href="vendor/datatables/dataTables.bootstrap4.min.css"
       rel="stylesheet"
     />
+    <!-- <script type="text/javascript">
+      function msg() {
+        var str = "Hello World!!";
+        alert(str);
+      }
+      window.onload = msg;
+    </script> -->
   </head>
 
   <body id="page-top">
@@ -50,22 +56,22 @@
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+          <div class="sidebar-brand-text mx-3">Reagent Platform</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a
           >
-        </li>
+        </li> -->
 
         <!-- Divider -->
-        <hr class="sidebar-divider" />
+        <!-- <hr class="sidebar-divider" /> -->
 
         <!-- Heading -->
         <div class="sidebar-heading">Interface</div>
@@ -178,7 +184,7 @@
 
         <!-- Nav Item - Tables -->
         <li class="nav-item active">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.ejs">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a
           >
@@ -544,16 +550,16 @@
                         <th>MaterialSafety</th>
                       </tr>
                     </tfoot>
-                    <tbody id="tbody-insert">
+                    <tbody id="data-insert">
                       <!-- <tr>
-                        <th>reagentName</th>
-                        <th>casNo</th>
-                        <th>formula</th>
-                        <th>molecularWeight</th>
-                        <th>meltingpoint</th>
-                        <th>boilingpoint</th>
-                        <th>density</th>
-                        <th>MaterialSafety</th>
+                        <td>reagentName</td>
+                        <td>casNo</td>
+                        <td>formula</td>
+                        <td>molecularWeight</td>
+                        <td>meltingpoint</td>
+                        <td>boilingpoint</td>
+                        <td>density</td>
+                        <td>MaterialSafety</td>
                       </tr> -->
                     </tbody>
                   </table>
@@ -624,15 +630,145 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        let reagent = req.query.reagent;
+        console.log("Test!!!");
+        console.log(reagent);
+        request(
+          {
+            method: "GET",
+            uri: "http://127.0.0.1:8000/api/search?keyword=" + reagent,
+          },
+          function (error, response, body) {
+            if (error) {
+              throw error;
+            } else {
+              console.log("Receive Data !");
+              // console.log(`Before Parsing Data ! : ${response.body}`);
+              const allResultJson = JSON.parse(response.body);
+              const allResult = [];
+              for (let i = 0; i < allResultJson.length; i++) {
+                let result = {
+                  reagentName: sample[i].Name,
+                  casNo: sample[i].ReagentProperty.casNo,
+                  formula: sample[i].ReagentProperty.formula,
+                  molecularWeight: sample[i].ReagentProperty.molecularWeight,
+                  meltingpoint: sample[i].ReagentProperty.meltingpoint,
+                  boilingpoint: sample[i].ReagentProperty.boilingpoint,
+                  density: sample[i].ReagentProperty.density,
+                  MaterialSafety: "Temporaily Empty!",
+                };
+                console.log("Parsing Success!!");
+                allResult.push(result);
+              }
+              console.log(allResult);
 
+              let newTBODY = document.getElementsByTagName("tbody");
+              console.log("Tbody : ", newTBODY);
+              console.log("Result : ", result);
+              let newTD = "";
+              for (let data in allResult) {
+                for (let key in allResult[data]) {
+                  // console.log(allResult[i][j]);
+                  // console.log(`word : ${word}`);
+                  // newTD.append(allResult[i][j]);
+                  // console.log(typeof allResult[i][j]);
+                  console.log("Data : ", allResult[data][key]);
+                  // let word = document.createTextNode(allResult[data][key]);
+                  // newTD.innerText = allResult[i][j];
+                  // console.log("word : ", word);
+                  newTD += "<td>" + allResult[data][key] + "</td>";
+                }
+                console.log(newTD);
+                // $("#tbody-insert").appendChild(newTR);
+                newTD = "<tr>" + newTD + "</tr>";
+                console.log(newTBODY);
+              }
+              newTBODY.innerHTML(newTD);
+              console.log(newTBODY);
+            }
+          }
+        );
+      });
+    </script>
     <!-- Core plugin JavaScript-->
-
+    <!-- <script src="javascripts/sb-admin-2.js"></script> -->
     <!-- Custom scripts for all pages-->
     <script src="javascripts/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="javascripts/test.js"></script>
+    <script type="text/javascript">
+      function msg(query) {
+        alert(query);
+      }
+      let reagent_query = window.location.search;
+      reagent_query = reagent_query.slice(9);
 
+      console.log("Test!!!");
+      console.log(reagent_query);
+      var request = require("request");
+      request(
+        {
+          method: "GET",
+          uri: "http://127.0.0.1:8000/api/search?keyword=" + reagent_query,
+        },
+        function (error, response, body) {
+          if (error) {
+            throw error;
+          } else {
+            console.log("Receive Data !");
+            // console.log(`Before Parsing Data ! : ${response.body}`);
+            const allResultJson = JSON.parse(response.body);
+            const allResult = [];
+            for (let i = 0; i < allResultJson.length; i++) {
+              let result = {
+                reagentName: sample[i].Name,
+                casNo: sample[i].ReagentProperty.casNo,
+                formula: sample[i].ReagentProperty.formula,
+                molecularWeight: sample[i].ReagentProperty.molecularWeight,
+                meltingpoint: sample[i].ReagentProperty.meltingpoint,
+                boilingpoint: sample[i].ReagentProperty.boilingpoint,
+                density: sample[i].ReagentProperty.density,
+                MaterialSafety: "Temporaily Empty!",
+              };
+              console.log("Parsing Success!!");
+              allResult.push(result);
+            }
+            console.log(allResult);
+
+            let newTBODY = document.getElementsByTagName("tbody");
+            console.log("Tbody : ", newTBODY);
+            console.log("Result : ", result);
+            let newTD = "";
+            for (let data in allResult) {
+              for (let key in allResult[data]) {
+                // console.log(allResult[i][j]);
+                // console.log(`word : ${word}`);
+                // newTD.append(allResult[i][j]);
+                // console.log(typeof allResult[i][j]);
+                console.log("Data : ", allResult[data][key]);
+                // let word = document.createTextNode(allResult[data][key]);
+                // newTD.innerText = allResult[i][j];
+                // console.log("word : ", word);
+                newTD += "<td>" + allResult[data][key] + "</td>";
+              }
+              console.log(newTD);
+              // $("#tbody-insert").appendChild(newTR);
+              newTD = "<tr>" + newTD + "</tr>";
+              console.log(newTBODY);
+            }
+            newTBODY.innerHTML(newTD);
+            console.log(newTBODY);
+          }
+        }
+      );
+      window.onload = msg(reagent_query);
+    </script>
     <!-- Page level plugins -->
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
