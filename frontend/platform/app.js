@@ -6,7 +6,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var contentRouter = require("./routes/content");
+var tablesRouter = require("./routes/tables");
 // var reagentRouter = require("./routes/reagent");
 // var nmrRouter = require("./routes/nmr");
 // var catalystRouter = require("./routes/catalyst");
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/content", contentRouter);
+app.use("/tables", tablesRouter);
 // app.use("/reagent", reagentRouter);
 // app.use("/nmr", nmrRouter);
 // app.use("/catalyst", catalystRouter);
