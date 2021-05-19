@@ -155,92 +155,82 @@ let temp_sample = [
   },
 ];
 
-function getReagent() {
-  console.log("!!!!!!!!!!!!");
-  var html_tag = document.getElementById("reagent");
-  console.log(html_tag);
-  var html_tag_value = html_tag.innerText;
+// function getReagent() {
+//   console.log("!!!!!!!!!!!!");
+//   var html_tag = document.getElementById("reagent");
+//   console.log(html_tag);
+//   var html_tag_value = html_tag.innerText;
 
-  return html_tag_value;
-}
+//   return html_tag_value;
+// }
 
-function printOneDictResult(varName, resultName) {
-  console.log(`VarName : ${varName}, resultName : ${resultName}`);
-}
-function printAllDictResult(result) {
-  for (let i in result) {
-    printOneDictResult(i, result[i]);
-  }
-  console.log("Trasfer Success!!");
-}
+// function printOneDictResult(varName, resultName) {
+//   console.log(`VarName : ${varName}, resultName : ${resultName}`);
+// }
+// function printAllDictResult(result) {
+//   for (let i in result) {
+//     printOneDictResult(i, result[i]);
+//   }
+//   console.log("Trasfer Success!!");
+// }
 
-function splitResult(sample) {
-  const allResult = [];
-  for (let i = 0; i < sample.length; i++) {
-    let result = {
-      reagentName: sample[i].Name,
-      casNo: sample[i].ReagentProperty.casNo,
-      formula: sample[i].ReagentProperty.formula,
-      molecularWeight: sample[i].ReagentProperty.molecularWeight,
-      meltingpoint: sample[i].ReagentProperty.meltingpoint,
-      boilingpoint: sample[i].ReagentProperty.boilingpoint,
-      density: sample[i].ReagentProperty.density,
-      MaterialSafety: sample[i].MaterialSafety,
-    };
-    console.log("Parsing Success!!");
-    printAllDictResult(result);
+// function splitResult(sample) {
+//   const allResult = [];
+//   for (let i = 0; i < sample.length; i++) {
+//     let result = {
+//       reagentName: sample[i].Name,
+//       casNo: sample[i].ReagentProperty.casNo,
+//       formula: sample[i].ReagentProperty.formula,
+//       molecularWeight: sample[i].ReagentProperty.molecularWeight,
+//       meltingpoint: sample[i].ReagentProperty.meltingpoint,
+//       boilingpoint: sample[i].ReagentProperty.boilingpoint,
+//       density: sample[i].ReagentProperty.density,
+//       MaterialSafety: "Temporaily Empty!",
+//     };
+//     console.log("Parsing Success!!");
+//     printAllDictResult(result);
 
-    allResult.push(result);
-  }
-  // console.log(allResult);
+//     allResult.push(result);
+//   }
+//   // console.log(allResult);
 
-  return allResult;
-}
+//   return allResult;
+// }
 
-// splitResult(temp_sample);
-
-function insertTable(result) {
-  let newTBODY = document.getElementById("tbody-insert");
-  console.log(result);
-  for (let i in result) {
-    let newTR = document.createElement("tr");
-    for (let j in result[i]) {
-      // console.log(result[i][j]);
-      let newTD = document.createElement("td");
-      // let word = document.createTextNode(result[i][j]);
-      // console.log(`word : ${word}`);
-      // newTD.appendChild(word);
-      newTD.innerText = result[i][j];
-      console.log(newTD);
-      newTR.append(newTD);
-    }
-    console.log(newTR);
-    // $("#tbody-insert").appendChild(newTR);
-    newTBODY.append(newTR);
-  }
-}
+// function insertTable(result) {
+//   let newTBODY = document.getElementsByTagName("tbody");
+//   console.log("Tbody : ", newTBODY);
+//   console.log("Result : ", result);
+//   let newTD = "";
+//   for (let data in result) {
+//     for (let key in result[data]) {
+//       // console.log(result[i][j]);
+//       // console.log(`word : ${word}`);
+//       // newTD.append(result[i][j]);
+//       // console.log(typeof result[i][j]);
+//       console.log("Data : ", result[data][key]);
+//       // let word = document.createTextNode(result[data][key]);
+//       // newTD.innerText = result[i][j];
+//       // console.log("word : ", word);
+//       newTD += "<td>" + result[data][key] + "</td>";
+//     }
+//     console.log(newTD);
+//     // $("#tbody-insert").appendChild(newTR);
+//     newTD = "<tr>" + newTD + "</tr>";
+//     console.log(newTBODY);
+//   }
+//   newTBODY.innerHTML(newTD);
+//   console.log(newTBODY);
+// }
 
 router.get("/", function (req, res, next) {
-  console.log("Test!");
-  request(
-    {
-      method: "GET",
-      uri:
-        "http://127.0.0.1:8000/api/search?keyword=water,benzene,Ascorbic%20acid",
-    },
-    function (error, response, body) {
-      if (error) {
-        throw error;
-      } else {
-        console.log("Receive Data !");
-        // console.log(`Before Parsing Data ! : ${response.body}`);
-        const resultJson = JSON.parse(response.body);
-        const parsingResult = splitResult(resultJson);
-        console.log(parsingResult);
-        insertTable(parsingResult);
-      }
-    }
-  );
+  let reagent = req.query.reagent;
+  console.log(reagent);
+  // function (error, response, body) {
+  //   if (error) {
+  //     throw error;
+  //   }
+  // };
 
   res.render("tables", { title: "Express" });
 });
