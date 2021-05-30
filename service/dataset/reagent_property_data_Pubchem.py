@@ -168,6 +168,7 @@ def get_query(name):
     return query_list
 
 
-#  print(ge4rt_query("Water"))
-# print(get_Table_data("water"))
-# print(get_Table_data("wat"))
+if __name__ == "__main__":
+    # print(get_query("Water"))
+    print(get_Table_data("water"))
+    # print(get_Table_data("wat"))
