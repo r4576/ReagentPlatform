@@ -78,12 +78,13 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Database
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
+DATABASE_SETTINGS_FILE = os.path.join(
+    os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
 db_database = db_info['altas']['database']
 db_host = db_info['altas']['host']
-db_username=db_info['altas']['username']
-db_password=db_info['altas']['password']
+db_username = db_info['altas']['username']
+db_password = db_info['altas']['password']
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -99,7 +100,7 @@ DATABASES = {
             'loggers': {
                 'djongo': {
                     'level': 'DEBUG',
-                    'propagate': False,                        
+                    'propagate': False,
                 }
             },
         },

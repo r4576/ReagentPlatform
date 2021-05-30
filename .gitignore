@@ -1,0 +1,7 @@
+.key/
+.vscode/
+frontend/platform/node_modules/*
+frontend/node_modules/*
+service/dataset/__pycache__/*
+back/api/__pycache__/*
+back/src/__pycache__/*
