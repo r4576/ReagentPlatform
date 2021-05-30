@@ -206,7 +206,14 @@
         <div id="content">
           <!-- Topbar -->
           <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            class="
+              navbar navbar-expand navbar-light
+              bg-white
+              topbar
+              mb-4
+              static-top
+              shadow
+            "
           >
             <!-- Sidebar Toggle (Topbar) -->
             <form class="form-inline">
@@ -220,7 +227,15 @@
 
             <!-- Topbar Search -->
             <form
-              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+              class="
+                d-none d-sm-inline-block
+                form-inline
+                mr-auto
+                ml-md-3
+                my-2 my-md-0
+                mw-100
+                navbar-search
+              "
             >
               <div class="input-group">
                 <input
@@ -255,7 +270,12 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                  class="
+                    dropdown-menu dropdown-menu-right
+                    p-3
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="searchDropdown"
                 >
                   <form class="form-inline mr-auto w-100 navbar-search">
@@ -294,7 +314,11 @@
                 </a>
                 <!-- Dropdown - Alerts -->
                 <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-list dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="alertsDropdown"
                 >
                   <h6 class="dropdown-header">Alerts Center</h6>
@@ -359,7 +383,11 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-list dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="messagesDropdown"
                 >
                   <h6 class="dropdown-header">Message Center</h6>
@@ -465,7 +493,11 @@
                 </a>
                 <!-- Dropdown - User Information -->
                 <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="userDropdown"
                 >
                   <a class="dropdown-item" href="#">
@@ -550,17 +582,22 @@
                         <th>MaterialSafety</th>
                       </tr>
                     </tfoot>
-                    <tbody id="data-insert">
-                      <!-- <tr>
-                        <td>reagentName</td>
-                        <td>casNo</td>
-                        <td>formula</td>
-                        <td>molecularWeight</td>
-                        <td>meltingpoint</td>
-                        <td>boilingpoint</td>
-                        <td>density</td>
-                        <td>MaterialSafety</td>
-                      </tr> -->
+                    <tbody>
+                      <% console.log(`Receive Result`, data) %> <% for (var i=0;
+                      i < data.length; i++) { %>
+                      <tr>
+                        <!-- <% console.log(data[i]) %> -->
+                        <% console.log(data[i].reagentName) %>
+                        <td><%=data[i].reagentName %></td>
+                        <td><%=data[i].casNo %></td>
+                        <td><%=data[i].formula %></td>
+                        <td><%=data[i].molecularWeight %></td>
+                        <td><%=data[i].meltingpoint %></td>
+                        <td><%=data[i].boilingpoint %></td>
+                        <td><%=data[i].density %></td>
+                        <td><%=data[i].MaterialSafety %></td>
+                      </tr>
+                      <% } %>
                     </tbody>
                   </table>
                 </div>
@@ -634,141 +671,12 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        let reagent = req.query.reagent;
-        console.log("Test!!!");
-        console.log(reagent);
-        request(
-          {
-            method: "GET",
-            uri: "http://127.0.0.1:8000/api/search?keyword=" + reagent,
-          },
-          function (error, response, body) {
-            if (error) {
-              throw error;
-            } else {
-              console.log("Receive Data !");
-              // console.log(`Before Parsing Data ! : ${response.body}`);
-              const allResultJson = JSON.parse(response.body);
-              const allResult = [];
-              for (let i = 0; i < allResultJson.length; i++) {
-                let result = {
-                  reagentName: sample[i].Name,
-                  casNo: sample[i].ReagentProperty.casNo,
-                  formula: sample[i].ReagentProperty.formula,
-                  molecularWeight: sample[i].ReagentProperty.molecularWeight,
-                  meltingpoint: sample[i].ReagentProperty.meltingpoint,
-                  boilingpoint: sample[i].ReagentProperty.boilingpoint,
-                  density: sample[i].ReagentProperty.density,
-                  MaterialSafety: "Temporaily Empty!",
-                };
-                console.log("Parsing Success!!");
-                allResult.push(result);
-              }
-              console.log(allResult);
-
-              let newTBODY = document.getElementsByTagName("tbody");
-              console.log("Tbody : ", newTBODY);
-              console.log("Result : ", result);
-              let newTD = "";
-              for (let data in allResult) {
-                for (let key in allResult[data]) {
-                  // console.log(allResult[i][j]);
-                  // console.log(`word : ${word}`);
-                  // newTD.append(allResult[i][j]);
-                  // console.log(typeof allResult[i][j]);
-                  console.log("Data : ", allResult[data][key]);
-                  // let word = document.createTextNode(allResult[data][key]);
-                  // newTD.innerText = allResult[i][j];
-                  // console.log("word : ", word);
-                  newTD += "<td>" + allResult[data][key] + "</td>";
-                }
-                console.log(newTD);
-                // $("#tbody-insert").appendChild(newTR);
-                newTD = "<tr>" + newTD + "</tr>";
-                console.log(newTBODY);
-              }
-              newTBODY.innerHTML(newTD);
-              console.log(newTBODY);
-            }
-          }
-        );
-      });
-    </script>
     <!-- Core plugin JavaScript-->
     <!-- <script src="javascripts/sb-admin-2.js"></script> -->
     <!-- Custom scripts for all pages-->
     <script src="javascripts/sb-admin-2.min.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="javascripts/test.js"></script>
-    <script type="text/javascript">
-      function msg(query) {
-        alert(query);
-      }
-      let reagent_query = window.location.search;
-      reagent_query = reagent_query.slice(9);
-
-      console.log("Test!!!");
-      console.log(reagent_query);
-      var request = require("request");
-      request(
-        {
-          method: "GET",
-          uri: "http://127.0.0.1:8000/api/search?keyword=" + reagent_query,
-        },
-        function (error, response, body) {
-          if (error) {
-            throw error;
-          } else {
-            console.log("Receive Data !");
-            // console.log(`Before Parsing Data ! : ${response.body}`);
-            const allResultJson = JSON.parse(response.body);
-            const allResult = [];
-            for (let i = 0; i < allResultJson.length; i++) {
-              let result = {
-                reagentName: sample[i].Name,
-                casNo: sample[i].ReagentProperty.casNo,
-                formula: sample[i].ReagentProperty.formula,
-                molecularWeight: sample[i].ReagentProperty.molecularWeight,
-                meltingpoint: sample[i].ReagentProperty.meltingpoint,
-                boilingpoint: sample[i].ReagentProperty.boilingpoint,
-                density: sample[i].ReagentProperty.density,
-                MaterialSafety: "Temporaily Empty!",
-              };
-              console.log("Parsing Success!!");
-              allResult.push(result);
-            }
-            console.log(allResult);
-
-            let newTBODY = document.getElementsByTagName("tbody");
-            console.log("Tbody : ", newTBODY);
-            console.log("Result : ", result);
-            let newTD = "";
-            for (let data in allResult) {
-              for (let key in allResult[data]) {
-                // console.log(allResult[i][j]);
-                // console.log(`word : ${word}`);
-                // newTD.append(allResult[i][j]);
-                // console.log(typeof allResult[i][j]);
-                console.log("Data : ", allResult[data][key]);
-                // let word = document.createTextNode(allResult[data][key]);
-                // newTD.innerText = allResult[i][j];
-                // console.log("word : ", word);
-                newTD += "<td>" + allResult[data][key] + "</td>";
-              }
-              console.log(newTD);
-              // $("#tbody-insert").appendChild(newTR);
-              newTD = "<tr>" + newTD + "</tr>";
-              console.log(newTBODY);
-            }
-            newTBODY.innerHTML(newTD);
-            console.log(newTBODY);
-          }
-        }
-      );
-      window.onload = msg(reagent_query);
-    </script>
     <!-- Page level plugins -->
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
