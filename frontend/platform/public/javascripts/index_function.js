@@ -7,14 +7,14 @@ $("form input").keydown(function (e) {
 });
 
 function makeIndex() {
-  var html_tag = document.getElementById("reagent");
+  var html_tag = document.getElementById("");
   var html_tag_len = html_tag.innerHTML.length;
   return html_tag_len % 9;
 }
 
 function makeBadge(content) {
   if (content === false) {
-    alert("Please Input you reagent name!");
+    alert("Please Input you  name!");
   }
 
   idx = makeIndex();
@@ -28,8 +28,8 @@ function makeBadge(content) {
     '<span class="badge badge-light">',
     '<span class="badge badge-dark">',
   ];
-  document.getElementById("reagent").innerHTML =
-    document.getElementById("reagent").innerHTML +
+  document.getElementById("").innerHTML =
+    document.getElementById("").innerHTML +
     badge_list[idx] +
     content +
     "</span>";
