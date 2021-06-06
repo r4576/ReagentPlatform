@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Tables</title>
+    <title>Reagent Plaform - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link
@@ -31,13 +31,7 @@
       href="vendor/datatables/dataTables.bootstrap4.min.css"
       rel="stylesheet"
     />
-    <!-- <script type="text/javascript">
-      function msg() {
-        var str = "Hello World!!";
-        alert(str);
-      }
-      window.onload = msg;
-    </script> -->
+    <script src="javascripts/index_function.js"></script>
   </head>
 
   <body id="page-top">
@@ -49,145 +43,51 @@
         id="accordionSidebar"
       >
         <!-- Sidebar - Brand -->
-        <a
+        <form
           class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="index.html"
+          action="/"
+          method="GET"
         >
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">Reagent Platform</div>
-        </a>
+          <button class="btn btn-primary">Reagent Platform</button>
+        </form>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0" />
 
-        <!-- Nav Item - Dashboard -->
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="index.html">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a
-          >
-        </li> -->
-
-        <!-- Divider -->
-        <!-- <hr class="sidebar-divider" /> -->
-
         <!-- Heading -->
-        <div class="sidebar-heading">Interface</div>
+        <div class="sidebar-heading">Main</div>
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseTwo"
-            aria-expanded="true"
-            aria-controls="collapseTwo"
-          >
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
-          </a>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Components:</h6>
-              <a class="collapse-item" href="buttons.html">Buttons</a>
-              <a class="collapse-item" href="cards.html">Cards</a>
-            </div>
-          </div>
-        </li>
-
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapseUtilities"
-            aria-expanded="true"
-            aria-controls="collapseUtilities"
-          >
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
-          </a>
-          <div
-            id="collapseUtilities"
-            class="collapse"
-            aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Utilities:</h6>
-              <a class="collapse-item" href="utilities-color.html">Colors</a>
-              <a class="collapse-item" href="utilities-border.html">Borders</a>
-              <a class="collapse-item" href="utilities-animation.html"
-                >Animations</a
-              >
-              <a class="collapse-item" href="utilities-other.html">Other</a>
-            </div>
-          </div>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+          <form class="nav-link" action="/" method="GET">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <button class="btn btn-primary">Main Page</button>
+          </form>
         </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider" />
 
         <!-- Heading -->
-        <div class="sidebar-heading">Addons</div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-          <a
-            class="nav-link collapsed"
-            href="#"
-            data-toggle="collapse"
-            data-target="#collapsePages"
-            aria-expanded="true"
-            aria-controls="collapsePages"
-          >
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-          </a>
-          <div
-            id="collapsePages"
-            class="collapse"
-            aria-labelledby="headingPages"
-            data-parent="#accordionSidebar"
-          >
-            <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Login Screens:</h6>
-              <a class="collapse-item" href="login.html">Login</a>
-              <a class="collapse-item" href="register.html">Register</a>
-              <a class="collapse-item" href="forgot-password.html"
-                >Forgot Password</a
-              >
-              <div class="collapse-divider"></div>
-              <h6 class="collapse-header">Other Pages:</h6>
-              <a class="collapse-item" href="404.html">404 Page</a>
-              <a class="collapse-item" href="blank.html">Blank Page</a>
-            </div>
-          </div>
-        </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-          <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a
-          >
-        </li>
+        <div class="sidebar-heading">Contents</div>
 
         <!-- Nav Item - Tables -->
         <li class="nav-item active">
-          <a class="nav-link" href="tables.ejs">
+          <form class="nav-link" action="/tables" method="GET">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a
-          >
+            <button class="btn btn-primary">Tables</button>
+          </form>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item active">
+          <form class="nav-link" action="/charts" method="GET">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <button class="btn btn-primary">Charts</button>
+          </form>
         </li>
 
         <!-- Divider -->
@@ -297,182 +197,9 @@
                 </div>
               </li>
 
-              <!-- Nav Item - Alerts -->
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-bell fa-fw"></i>
-                  <!-- Counter - Alerts -->
-                  <span class="badge badge-danger badge-counter">3+</span>
-                </a>
-                <!-- Dropdown - Alerts -->
-                <div
-                  class="
-                    dropdown-list dropdown-menu dropdown-menu-right
-                    shadow
-                    animated--grow-in
-                  "
-                  aria-labelledby="alertsDropdown"
-                >
-                  <h6 class="dropdown-header">Alerts Center</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold"
-                        >A new monthly report is ready to download!</span
-                      >
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-success">
-                        <i class="fas fa-donate text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 7, 2019</div>
-                      $290.29 has been deposited into your account!
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-warning">
-                        <i class="fas fa-exclamation-triangle text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 2, 2019</div>
-                      Spending Alert: We've noticed unusually high spending for
-                      your account.
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item text-center small text-gray-500"
-                    href="#"
-                    >Show All Alerts</a
-                  >
-                </div>
-              </li>
-
-              <!-- Nav Item - Messages -->
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="messagesDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-envelope fa-fw"></i>
-                  <!-- Counter - Messages -->
-                  <span class="badge badge-danger badge-counter">7</span>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div
-                  class="
-                    dropdown-list dropdown-menu dropdown-menu-right
-                    shadow
-                    animated--grow-in
-                  "
-                  aria-labelledby="messagesDropdown"
-                >
-                  <h6 class="dropdown-header">Message Center</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="img/undraw_profile_1.svg"
-                        alt=""
-                      />
-                      <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div class="font-weight-bold">
-                      <div class="text-truncate">
-                        Hi there! I am wondering if you can help me with a
-                        problem I've been having.
-                      </div>
-                      <div class="small text-gray-500">Emily Fowler · 58m</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="img/undraw_profile_2.svg"
-                        alt=""
-                      />
-                      <div class="status-indicator"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        I have the photos that you ordered last month, how would
-                        you like them sent to you?
-                      </div>
-                      <div class="small text-gray-500">Jae Chun · 1d</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="img/undraw_profile_3.svg"
-                        alt=""
-                      />
-                      <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        Last month's report looks great, I am very happy with
-                        the progress so far, keep up the good work!
-                      </div>
-                      <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                    </div>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                      <img
-                        class="rounded-circle"
-                        src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                        alt=""
-                      />
-                      <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                      <div class="text-truncate">
-                        Am I a good boy? The reason I ask is because someone
-                        told me that people say this to all dogs, even if they
-                        aren't good...
-                      </div>
-                      <div class="small text-gray-500">
-                        Chicken the Dog · 2w
-                      </div>
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item text-center small text-gray-500"
-                    href="#"
-                    >Read More Messages</a
-                  >
-                </div>
-              </li>
-
               <div class="topbar-divider d-none d-sm-block"></div>
 
-              <!-- Nav Item - User Information -->
+               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a
                   class="nav-link dropdown-toggle"
@@ -484,11 +211,11 @@
                   aria-expanded="false"
                 >
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >Douglas McGee</span
+                    ><%= %></span
                   >
                   <img
                     class="img-profile rounded-circle"
-                    src="img/undraw_profile.svg"
+                    src="images/undraw_profile_2.svg"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -533,21 +260,14 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-            <p class="mb-4">
-              DataTables is a third party plugin that is used to generate the
-              demo table below. For more information about DataTables, please
-              visit the
-              <a target="_blank" href="https://datatables.net"
-                >official DataTables documentation</a
-              >.
-            </p>
+            <h1 class="h3 mb-2 text-gray-800">Reagent Tables</h1>
+            <p class="mb-4">여러분들의 시약 정보를 Table에서 확인하세요!</p>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
-                  DataTables Example
+                  Reagent Information
                 </h6>
               </div>
               <div class="card-body">
@@ -567,7 +287,8 @@
                         <th>meltingpoint</th>
                         <th>boilingpoint</th>
                         <th>density</th>
-                        <th>MaterialSafety</th>
+                        <th>NFPA Graph</th>
+                        <th>Material Safety</th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -579,15 +300,13 @@
                         <th>meltingpoint</th>
                         <th>boilingpoint</th>
                         <th>density</th>
-                        <th>MaterialSafety</th>
+                        <th>NFPA Graph</th>
+                        <th>Material Safety</th>
                       </tr>
                     </tfoot>
                     <tbody>
-                      <% console.log(`Receive Result`, data) %> <% for (var i=0;
-                      i < data.length; i++) { %>
+                      <% for (var i=0; i < data.length; i++) { %>
                       <tr>
-                        <!-- <% console.log(data[i]) %> -->
-                        <% console.log(data[i].reagentName) %>
                         <td><%=data[i].reagentName %></td>
                         <td><%=data[i].casNo %></td>
                         <td><%=data[i].formula %></td>
@@ -595,11 +314,323 @@
                         <td><%=data[i].meltingpoint %></td>
                         <td><%=data[i].boilingpoint %></td>
                         <td><%=data[i].density %></td>
-                        <td><%=data[i].MaterialSafety %></td>
+                        <% if (data[i].MaterialSafety != null) { %>
+                          <td class="text-center">
+                            <button
+                              class="btn btn-warning btn-circle btn-sm"
+                              data-toggle="modal"
+                              data-target="#modalChart"
+                              data-source="<%= data[i].MaterialSafety.NFPAHealthNum %>,<%= data[i].MaterialSafety.NFPAFireNum %>,<%= data[i].MaterialSafety.NFPAReactionNum %>"                          >
+                              <i class="fas fa-exclamation-triangle"></i>
+                            </button>
+                          </td>
+                          <td class="text-center">
+                            <button
+                              class="btn btn-info btn-circle btn-sm"
+                              data-toggle="modal"
+                              data-target="#modal-edit-user-<%= data[i].casNo %>"
+                              data-source="<%= data[i].MaterialSafety.NFPAHealthNum %>,<%= data[i].MaterialSafety.NFPAFireNum %>,<%= data[i].MaterialSafety.NFPAReactionNum %>"                          >
+                              <i class="fas fa-exclamation-circle"></i>
+                            </button>
+                          </td>
+                        <% } else { %>
+                          <td></td>
+                          <td></td>
+                        <% } %>
                       </tr>
                       <% } %>
                     </tbody>
                   </table>
+                  <% for (var i=0; i < data.length; i++) { %>
+                    <% if (data[i].MaterialSafety != null) { %>
+                      <div class="modal fade bd-example-modal-lg" id="modal-edit-user-<%= data[i].casNo %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"> <!-- ✅ unique id for each modal -->
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h4 class="modal-title" id="myModalLabel"> <%=data[i].reagentName%> 의 유해성</h4>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            </div>
+                            <div class="modal-body">
+                              
+                              <!-- content -->
+                              <div class="container-fluid">
+                                <h5>NFPA</h5>
+                                <hr />
+                                <div class="text-center">
+                                  <img class="img-fluid" src="images/NFPA.jpg" />
+                                </div>
+                                <hr />
+                                <div class="row">
+                                  <div class="card shadow mb-4">
+                                    <!-- Card Header - Accordion -->
+                                    <a
+                                      href="#collapseCardExample"
+                                      class="d-block card-header py-3"
+                                      data-toggle="collapse"
+                                      role="button"
+                                      aria-expanded="true"
+                                      aria-controls="collapseCardExample"
+                                    >
+                                      <h6 class="m-0 font-weight-bold text-primary">
+                                        NFPA 란?
+                                      </h6>
+                                    </a>
+                                    <!-- Card Content - Collapse -->
+                                    <div class="collapse" id="collapseCardExample">
+                                      <div class="card-body">
+                                        NFPA 704는 미국화재예방협회(National Fire Protection Association, NFPA)에서 발표한 규격의 일종입니다. 
+                                        NFPA는 응급 상황에서 위험 물질에 대해 신속한 대응을 하기 위해 만들어진 소위 "fire diamond"로 표현됩니다. 
+                                        이 규격은 응급상황 발생시, 만약 필요하다면 어떤 장비가 요구되는지, 어떤 처리절차가 필요한지, 혹은 어떠한 대책을 취해야할지를 결정하는 데 도움을 줍니다.
+                                      자세한 정보를 알고 싶다면, <a href="https://ko.wikipedia.org/wiki/NFPA_704"> 여기 </a>를 클릭해주세요!
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <!-- Basic Card Example -->
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          위해성 수치
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.NFPAHealth) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          인화성 수치
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.NFPAFire) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          반응성 수치
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.NFPAReaction) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          기타
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.NFPASpecial) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <h5>인체 유해성</h5>
+                                <hr />
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <!-- Basic Card Example -->
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          일반 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humNormal) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          호흡기 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humInhale) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          구강 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humMouth) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          피부 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humSkin) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          안구 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humEye) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          부가적인 유해성
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.humEtc) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <h5>유해성 조치</h5>
+                                <hr />
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <!-- Basic Card Example -->
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          호흡기 유해성 대처
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.emeInhale) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          피부 유해성 대처
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.emeSkin) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          안구 유해성 대처
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.emeEye) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          구강 유해성 대처
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.emeMouth) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          부가적인 유해성 대처
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.emeEtc) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <h5>유해성 후처리</h5>
+                                <hr />
+                                <div class="row">
+                                  <div class="col-lg-6">
+                                    <!-- Basic Card Example -->
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          유출 시 후처리
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.accLeakage) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          인화성 물질 후처리
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.accFire) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          취급 후 후처리
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.treTreatcaution) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          보관 방법
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.treStorage) %>
+                                      </div>
+                                    </div>
+                                    <div class="card shadow mb-4">
+                                      <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">
+                                          폐기 처리 방법
+                                        </h6>
+                                      </div>
+                                      <div class="card-body">
+                                        <%= JSON.stringify(data[i].MaterialSafety.treDisposal) %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% } %>
                 </div>
               </div>
             </div>
@@ -626,6 +657,22 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <div class="modal fade" id="modalChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Radar Chart</h4>
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <canvas id="chart" width="568" height="300"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Logout Modal-->
     <div
@@ -660,7 +707,9 @@
             >
               Cancel
             </button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <form action="/" method="GET">
+              <button class="btn btn-primary">Logout</button>
+            </form>
           </div>
         </div>
       </div>
@@ -672,15 +721,14 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <!-- <script src="javascripts/sb-admin-2.js"></script> -->
+    <script src="javascripts/sb-admin-2.js"></script>
     <!-- Custom scripts for all pages-->
     <script src="javascripts/sb-admin-2.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="javascripts/test.js"></script>
     <!-- Page level plugins -->
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="javascripts/demo/datatables-demo.js"></script>
+    <script src="javascripts/data_visualization/datatables-demo.js"></script>
+    <script src="javascripts/index_function.js"></script>
   </body>
 </html>

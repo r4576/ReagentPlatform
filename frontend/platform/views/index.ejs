@@ -8,7 +8,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Landing Page - Start Bootstrap Theme</title>
+    <title>SweetChem : Find your reagent information!</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom fonts for this template -->
@@ -29,7 +29,9 @@
 
   <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">SweetChem</a>
+      <form action="/" method="GET">
+        <button class="navbar-brand btn btn-link">SweetChem</button>
+      </form>
       <button
         class="navbar-toggler"
         type="button"
@@ -45,18 +47,21 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
+            <a class="nav-link" href="#Query_Data"
               >Main <span class="sr-only">(current)</span></a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#About">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Members</a>
+            <a class="nav-link" href="#How_To_Use">How To Use?</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
+            <a class="nav-link" href="#Members">Members</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Contact_Us">Contact Us</a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -72,9 +77,9 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Reagent Information</a>
-              <a class="dropdown-item" href="#">NMR Analysis</a>
+              <a class="dropdown-item" href="#">NMR Analysis (Later)</a>
               <a class="dropdown-item" href="#"
-                >Verify your Computational File</a
+                >Verify your Computational File (Later)</a
               >
             </div>
           </li>
@@ -103,14 +108,14 @@
       </div>
     </nav>
     <!-- Masthead -->
-    <header class="masthead text-white text-center">
+    <header class="masthead text-white text-center" id="Query_Data">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-xl-9 mx-auto">
             <h1 class="mb-5">
               Study with Our Platform <br />
-              about Chemistry!
+              about Chemistry Report!
             </h1>
           </div>
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
@@ -140,7 +145,7 @@
     </header>
 
     <!-- Icons Grid -->
-    <section class="features-icons bg-light text-center">
+    <section class="features-icons bg-light text-center" id="About">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -162,8 +167,8 @@
               </div>
               <h3>Store your data</h3>
               <p class="lead mb-0">
-                여러분들이 사용한 정보 및 데이터들을 저장하고 새로운 결과물을
-                경험하세요!
+                SweetChem은 여러분들이 사용한 정보 및 데이터들을 저장하고 새로운
+                결과물을 보여줍니다.
               </p>
             </div>
           </div>
@@ -173,7 +178,9 @@
                 <i class="icon-check m-auto text-primary"></i>
               </div>
               <h3>Easy to Use</h3>
-              <p class="lead mb-0">사용자에 눈높이에 맞게 쉽고 직관적입니다.</p>
+              <p class="lead mb-0">
+                SweetChem은 사용자에 눈높이에 맞게 쉽고 직관적입니다.
+              </p>
             </div>
           </div>
         </div>
@@ -181,18 +188,20 @@
     </section>
 
     <!-- Image Showcases -->
-    <section class="showcase">
-      <div class="container-fluid p-0">
+    <section class="showcase" id="How_To_Use">
+      <div class="container">
         <div class="row no-gutters">
           <div
             class="col-lg-6 order-lg-2 text-white showcase-img"
-            style="background-image: url('images/bg-showcase-1.jpg')"
-          ></div>
+          >
+            <div class="text-center">
+              <img class = "img-fluid" src="images/bg-showcase-1.jpg" />
+            </div>  
+          </div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Reagent Information</h2>
+            <h2>Input Your Reagent</h2>
             <p class="lead mb-0">
-              시약 formula나 IUPAC 이름을 입력하면, 레포트에 쓰던 정보들을 바로
-              찾을 수 있습니다.
+              시약 formula나 IUPAC 이름을 , 을 이용해서 입력해주세요
             </p>
           </div>
         </div>
@@ -202,11 +211,10 @@
             style="background-image: url('images/bg-showcase-2.jpg')"
           ></div>
           <div class="col-lg-6 my-auto showcase-text">
-            <h2>NMR Analysis</h2>
+            <h2>See Data Table</h2>
             <p class="lead mb-0">
-              여러분들이 궁금한 분자식을 chemdraw로 그려서 가상의 NMR peak를 볼
-              수 있습니다. 또는 여러분들의 실제 결과 data csv를 첨부하면
-              여러분들의 peak를 분석해서 알려줍니다.
+              여러분들이 입력한 시약에 관한 정보들을 검색하지 않아도 SweetChem을
+              이용해서 간편하게 확인할 수 있습니다
             </p>
           </div>
         </div>
@@ -216,11 +224,10 @@
             style="background-image: url('images/bg-showcase-3.jpg')"
           ></div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Verfiy Computational File &amp; calculate energy</h2>
+            <h2>Watch Your Reagent's Danger</h2>
             <p class="lead mb-0">
-              여러분들의 계산화학 파일을 검증하여 제대로 계산이 된 파일인지
-              확인이 가능합니다. 또한 그 파일의 Energy Barrier를 간단하게 계산할
-              수 있습니다.
+              여러분들이 실제로 쓰고 있는 시약들이 실제로 어떤 유해성을 가지는지
+              확인해보세요!
             </p>
           </div>
         </div>
@@ -228,7 +235,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials text-center bg-light">
+    <section class="testimonials text-center bg-light" id="Members">
       <div class="container">
         <h2 class="mb-5">What people are saying...</h2>
         <div class="row">
@@ -241,8 +248,11 @@
               />
               <h5>Mambo</h5>
               <p class="font-weight-light mb-0">
-                <li>2013 ~ 2020 : Applied Chemistry, KyungHee Univ</li>
-                <li>2020 ~ : Chemical Engineering, Korea Univ + KIST</li>
+                <li>2013 ~ 2020 : [Applied Chemistry] KyungHee Univ</li>
+                <li>2020 ~ : [Chemical Engineering] <br> Korea Univ + KIST 
+                  <li>Autonomous Laboratory</li>
+                  <li>Machine Learning</li>
+                </li>
               </p>
             </div>
           </div>
@@ -255,7 +265,7 @@
               />
               <h5>4Moyede</h5>
               <p class="font-weight-light mb-0">
-                <li>2014 ~ 2021 : Computer Science, KyungHee Univ</li>
+                <li>2014 ~ 2021 : [Computer Science] KyungHee Univ</li>
               </p>
             </div>
           </div>
@@ -268,7 +278,7 @@
               />
               <h5>Dae Ho</h5>
               <p class="font-weight-light mb-0">
-                <li>2017 ~ : Applied Chemistry, KyungHee Univ</li>
+                <li>2017 ~ : [Applied Chemistry] KyungHee Univ</li>
               </p>
             </div>
           </div>
@@ -277,7 +287,7 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="call-to-action text-white text-center">
+    <section class="call-to-action text-white text-center" id="Contact_Us">
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
@@ -316,49 +326,53 @@
           <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
             <ul class="list-inline mb-2">
               <li class="list-inline-item">
-                <a href="#">About</a>
+                <a href="#Query_Data">Main</a>
               </li>
               <li class="list-inline-item">&sdot;</li>
               <li class="list-inline-item">
-                <a href="#">Contact</a>
+                <a href="#About">About</a>
               </li>
               <li class="list-inline-item">&sdot;</li>
               <li class="list-inline-item">
-                <a href="#">Terms of Use</a>
+                <a href="#Contact_Us">Contact Us</a>
               </li>
               <li class="list-inline-item">&sdot;</li>
               <li class="list-inline-item">
-                <a href="#">Privacy Policy</a>
+                <a href="#How_To_Use">How To Use?</a>
+              </li>
+              <li class="list-inline-item">&sdot;</li>
+              <li class="list-inline-item">
+                <a href="#Members">Members</a>
               </li>
             </ul>
             <p class="text-muted small mb-4 mb-lg-0">
-              &copy; Your Website 2020. All Rights Reserved.
+              &copy; Our Website 2020. All Rights Reserved.
             </p>
           </div>
           <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
             <ul class="list-inline mb-0">
               <li class="list-inline-item mr-3">
-                <a href="#">
+                <a href="https://github.com/r4576/ReagentPlatform">
                   <i class="fab fa-github fa-2x fa-fw"></i>
                 </a>
               </li>
               <li class="list-inline-item mr-3">
-                <a href="#">
+                <a href="#Query_Data">
                   <i class="fab fa-html5 fa-2x fa-fw"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="##Query_Data">
                   <i class="fab fa-css3-alt fa-2x fa-fw"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="#Query_Data">
                   <i class="fab fa-js-square fa-2x fa-fw"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#">
+                <a href="#Query_Data">
                   <i class="fab fa-python fa-2x fa-fw"></i>
                 </a>
               </li>

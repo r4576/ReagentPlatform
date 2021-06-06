@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>SB Admin 2 - Blank</title>
+    <title>SB Admin 2 - showMaterialSafety</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -43,7 +43,9 @@
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+          <div class="sidebar-brand-text mx-3">
+            ReagentPlatform <sup>2</sup>
+          </div>
         </a>
 
         <!-- Divider -->
@@ -193,7 +195,14 @@
         <div id="content">
           <!-- Topbar -->
           <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+            class="
+              navbar navbar-expand navbar-light
+              bg-white
+              topbar
+              mb-4
+              static-top
+              shadow
+            "
           >
             <!-- Sidebar Toggle (Topbar) -->
             <button
@@ -205,7 +214,15 @@
 
             <!-- Topbar Search -->
             <form
-              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+              class="
+                d-none d-sm-inline-block
+                form-inline
+                mr-auto
+                ml-md-3
+                my-2 my-md-0
+                mw-100
+                navbar-search
+              "
             >
               <div class="input-group">
                 <input
@@ -240,7 +257,12 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                  class="
+                    dropdown-menu dropdown-menu-right
+                    p-3
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="searchDropdown"
                 >
                   <form class="form-inline mr-auto w-100 navbar-search">
@@ -279,7 +301,11 @@
                 </a>
                 <!-- Dropdown - Alerts -->
                 <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-list dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="alertsDropdown"
                 >
                   <h6 class="dropdown-header">Alerts Center</h6>
@@ -344,7 +370,11 @@
                 </a>
                 <!-- Dropdown - Messages -->
                 <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-list dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="messagesDropdown"
                 >
                   <h6 class="dropdown-header">Message Center</h6>
@@ -450,7 +480,11 @@
                 </a>
                 <!-- Dropdown - User Information -->
                 <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  class="
+                    dropdown-menu dropdown-menu-right
+                    shadow
+                    animated--grow-in
+                  "
                   aria-labelledby="userDropdown"
                 >
                   <a class="dropdown-item" href="#">
@@ -487,6 +521,69 @@
           <div class="container-fluid">
             <!-- Page Heading -->
             <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Material Safety
+                </h6>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead>
+                      <tr>
+                        <th>NFPAHealthNum</th>
+                        <th>NFPAFireNum</th>
+                        <th>NFPAReactionNum</th>
+                        <th>NFPASpecialNum</th>
+                        <th>meltingpoint</th>
+                        <th>boilingpoint</th>
+                        <th>density</th>
+                        <th>MaterialSafety</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>reagentName</th>
+                        <th>casNo</th>
+                        <th>formula</th>
+                        <th>molecularWeight</th>
+                        <th>meltingpoint</th>
+                        <th>boilingpoint</th>
+                        <th>density</th>
+                        <th>MaterialSafety</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      <% console.log(`Receive Result`, data) %> <% for (var i=0;
+                      i < data.length; i++) { %>
+                      <tr>
+                        <!-- <% console.log(data[i]) %> -->
+                        <% console.log(data[i].reagentName) %>
+                        <td><%=data[i].reagentName %></td>
+                        <td><%=data[i].casNo %></td>
+                        <td><%=data[i].formula %></td>
+                        <td><%=data[i].molecularWeight %></td>
+                        <td><%=data[i].meltingpoint %></td>
+                        <td><%=data[i].boilingpoint %></td>
+                        <td><%=data[i].density %></td>
+                        <td>
+                          <button
+                            class="btn btn-warning btn-circle btn-sm"
+                            onclick="showMaterialSafety();"
+                          ></button>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
           </div>
           <!-- /.container-fluid -->
         </div>
