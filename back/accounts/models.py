@@ -1,10 +1,27 @@
 from djongo import models
-from django.contrib.auth.models import User
 
 
-class User(models.Model):
+class UserHistory(models.Model):
     objects = models.DjongoManager()
 
     id = models.ObjectIdField(db_column='_id', primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    history = models.ListField()
+    email = models.EmailField()
+    history = models.TextField()
+
+
+class HistoryController:
+    def __init__(self, userHistory):
+        self.userHistory = userHistory
+        self.historyList = userHistory.history.split(" ")
+
+    def addHistory(self, newHistory):
+        self.historyList.append(newHistory)
+
+    def deleteHistory(self, oldHistory):
+        if oldHistory in self.historyList:
+            self.historyList.remove(oldHistory)
+
+    def saveHistory(self):
+        historyText = " ".join(self.historyList)
+        self.userHistory.history = historyText
+        self.userHistory.save()

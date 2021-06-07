@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from rest_framework import status
 from rest_framework import response
@@ -10,7 +11,7 @@ from google_auth_oauthlib.flow import Flow
 from google.oauth2 import id_token
 from google.auth.transport.requests import Request
 
-from accounts.models import User
+from accounts.models import UserHistory
 
 flow = Flow.from_client_secrets_file(client_secrets_file=settings.GOOGLE_API_SETTINGS_FILE, scopes=settings.GOOGLE_AUTH_SCOPES)
 flow.redirect_uri = 'http://localhost:8000/accounts/google/callback'
@@ -31,6 +32,8 @@ class GoogleCallback(APIView):
         flow.fetch_token(authorization_response=request.build_absolute_uri().replace('http:', 'https:'))
         creds = flow.credentials
         userinfo = id_token.verify_oauth2_token(creds._id_token, Request(), creds._client_id)
+
+        User = get_user_model()
         try:
             User.objects.get(email=userinfo['email'])
         except User.DoesNotExist:
@@ -38,6 +41,11 @@ class GoogleCallback(APIView):
                                 username=userinfo['email'],
                                 first_name=userinfo['given_name'],
                                 last_name=userinfo['family_name'])
+        
+        try:
+            UserHistory.objects.get(email=userinfo['email'])
+        except UserHistory.DoesNotExist:
+            UserHistory.objects.create(email=userinfo['email'], history="")
         
         return redirect("http://localhost:80")
 
