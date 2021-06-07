@@ -150,12 +150,12 @@ const result = [
 // console.log(result.length);
 // console.log(result[1]);
 
-function printResult(varName, resultName) {
+function printOneDictResult(varName, resultName) {
   console.log(`VarName : ${varName}, resultName : ${resultName}`);
 }
-function printAllResult(result) {
+function printAllDictResult(result) {
   for (let i in result) {
-    printResult(i, result[i]);
+    printOneDictResult(i, result[i]);
   }
   console.log("Trasfer Success!!");
 }
@@ -171,16 +171,14 @@ function splitResult(sample) {
       meltingpoint: sample[i].ReagentProperty.meltingpoint,
       boilingpoint: sample[i].ReagentProperty.boilingpoint,
       density: sample[i].ReagentProperty.density,
-      MaterialSafety: sample[i].MaterialSafety,
+      MaterialSafety: "Temporaily Empty!",
     };
     console.log("Parsing Success!!");
-    printAllResult(result);
+    printAllDictResult(result);
 
     allResult.push(result);
   }
-  console.log(allResult);
+  // console.log(allResult);
 
   return allResult;
 }
-
-splitResult(result);

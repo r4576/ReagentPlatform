@@ -10,7 +10,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Regeant Platform - Chart</title>
+    <title>SB Admin 2 - Other Utilities</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -43,7 +43,7 @@
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <div class="sidebar-brand-text mx-3">Reagent Platform</div>
+          <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
         </a>
 
         <!-- Divider -->
@@ -53,7 +53,7 @@
         <li class="nav-item">
           <a class="nav-link" href="index.html">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Main</span></a
+            <span>Dashboard</span></a
           >
         </li>
 
@@ -91,9 +91,9 @@
         </li>
 
         <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item">
+        <li class="nav-item active">
           <a
-            class="nav-link collapsed"
+            class="nav-link"
             href="#"
             data-toggle="collapse"
             data-target="#collapseUtilities"
@@ -105,7 +105,7 @@
           </a>
           <div
             id="collapseUtilities"
-            class="collapse"
+            class="collapse show"
             aria-labelledby="headingUtilities"
             data-parent="#accordionSidebar"
           >
@@ -116,7 +116,9 @@
               <a class="collapse-item" href="utilities-animation.html"
                 >Animations</a
               >
-              <a class="collapse-item" href="utilities-other.html">Other</a>
+              <a class="collapse-item active" href="utilities-other.html"
+                >Other</a
+              >
             </div>
           </div>
         </li>
@@ -162,7 +164,7 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a
@@ -518,69 +520,137 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">Charts</h1>
+            <h1 class="h3 mb-1 text-gray-800">Other Utilities</h1>
             <p class="mb-4">
-              Chart.js is a third party plugin that is used to generate the
-              charts in this theme. The charts below have been customized - for
-              further customization options, please visit the
-              <a target="_blank" href="https://www.chartjs.org/docs/latest/"
-                >official Chart.js documentation</a
-              >.
+              Bootstrap's default utility classes can be found on the official
+              <a href="https://getbootstrap.com/docs"
+                >Bootstrap Documentation</a
+              >
+              page. The custom utilities below were created to extend this theme
+              past the default utility classes built into Bootstrap's framework.
             </p>
 
             <!-- Content Row -->
             <div class="row">
-              <div class="col-xl-8 col-lg-7">
-                <!-- Area Chart -->
-                <div class="card shadow mb-4">
+              <div class="col-lg-6">
+                <!-- Overflow Hidden -->
+                <div class="card mb-4">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Area Chart
+                      Overflow Hidden Utilty
                     </h6>
                   </div>
                   <div class="card-body">
-                    <div class="chart-area">
-                      <canvas id="myAreaChart"></canvas>
-                    </div>
-                    <hr />
-                    Styling for the area chart can be found in the
-                    <code>/js/demo/chart-area-demo.js</code> file.
+                    Use <code>.o-hidden</code> to set the overflow property of
+                    any element to hidden.
                   </div>
                 </div>
 
-                <!-- Bar Chart -->
-                <div class="card shadow mb-4">
+                <!-- Progress Small -->
+                <div class="card mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Progress Small Utility
+                    </h6>
                   </div>
                   <div class="card-body">
-                    <div class="chart-bar">
-                      <canvas id="myBarChart"></canvas>
+                    <div class="mb-1 small">Normal Progress Bar</div>
+                    <div class="progress mb-4">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 75%"
+                        aria-valuenow="75"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
                     </div>
-                    <hr />
-                    Styling for the bar chart can be found in the
-                    <code>/js/demo/chart-bar-demo.js</code> file.
+                    <div class="mb-1 small">Small Progress Bar</div>
+                    <div class="progress progress-sm mb-2">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 75%"
+                        aria-valuenow="75"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    Use the <code>.progress-sm</code> class along with
+                    <code>.progress</code>
+                  </div>
+                </div>
+
+                <!-- Dropdown No Arrow -->
+                <div class="card mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Dropdown - No Arrow
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="dropdown no-arrow mb-4">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Dropdown (no arrow)
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#"
+                          >Something else here</a
+                        >
+                      </div>
+                    </div>
+                    Add the <code>.no-arrow</code> class alongside the
+                    <code>.dropdown</code>
                   </div>
                 </div>
               </div>
 
-              <!-- Donut Chart -->
-              <div class="col-xl-4 col-lg-5">
-                <div class="card shadow mb-4">
-                  <!-- Card Header - Dropdown -->
+              <div class="col-lg-6">
+                <!-- Roitation Utilities -->
+                <div class="card">
                   <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Donut Chart
+                      Rotation Utilities
                     </h6>
                   </div>
-                  <!-- Card Body -->
-                  <div class="card-body">
-                    <div class="chart-pie pt-4">
-                      <canvas id="myPieChart"></canvas>
+                  <div class="card-body text-center">
+                    <div
+                      class="
+                        bg-primary
+                        text-white
+                        p-3
+                        rotate-15
+                        d-inline-block
+                        my-4
+                      "
+                    >
+                      .rotate-15
                     </div>
                     <hr />
-                    Styling for the donut chart can be found in the
-                    <code>/js/demo/chart-pie-demo.js</code> file.
+                    <div
+                      class="
+                        bg-primary
+                        text-white
+                        p-3
+                        rotate-n-15
+                        d-inline-block
+                        my-4
+                      "
+                    >
+                      .rotate-n-15
+                    </div>
                   </div>
                 </div>
               </div>
@@ -642,9 +712,7 @@
             >
               Cancel
             </button>
-            <form action="/" method="GET">
-              <button class="btn btn-primary">Logout</button>
-            </form>
+            <a class="btn btn-primary" href="login.html">Logout</a>
           </div>
         </div>
       </div>
@@ -659,13 +727,5 @@
 
     <!-- Custom scripts for all pages-->
     <script src="javascripts/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="javascripts/data_visualization/chart-area-demo.js"></script>
-    <script src="javascripts/data_visualization/chart-pie-demo.js"></script>
-    <script src="javascripts/data_visualization/chart-bar-demo.js"></script>
   </body>
 </html>
