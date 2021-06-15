@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import json
-import djongo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +30,6 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     'api.apps.ApiConfig',
-    'accounts.apps.AccountsConfig',
 
     'rest_framework',
     'corsheaders',
@@ -82,35 +79,19 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Key file path
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
-GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'googleapi.json')
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
 
 # Database
 
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
-db_database = db_info['altas']['database']
-db_host = db_info['altas']['host']
-db_username=db_info['altas']['username']
-db_password=db_info['altas']['password']
+DB_DATABASE = db_info['ChemData']['database']
+DB_HOST = db_info['ChemData']['host']
+DB_USERNAME = db_info['ChemData']['username']
+DB_PASSWORD = db_info['ChemData']['password']
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': db_database,
-        'CLIENT': {
-            'host': db_host,
-            'username': db_username,
-            'password': db_password,
-            'authMechanism': 'SCRAM-SHA-1'
-        },
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propagate': False,                        
-                }
-            },
-        },
     }
 }
 
@@ -163,12 +144,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-# Google API Setting
-
-GOOGLE_AUTH_SCOPES = [
-    'openid',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile',
-]

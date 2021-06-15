@@ -1,7 +1,3 @@
-#형구형 한테 open_file경로 질문
-#형구형 한테 debuginglist 질문
-
-
 import re
 import json
 import requests 
@@ -58,8 +54,8 @@ dataset_size = 6770
 
 debuging_list = []
 
-file_path = "./material_safety_data.json"
-error_file_path = "./error_list.txt"
+file_path = "./data/material_safety_data.json"
+error_file_path = "./data/error_list.txt"
 
 danger_table = pd.DataFrame(columns=['CAS No','물리화학적 성질:상태','물리화학적 성질:색상','물리화학적 성질:냄새','물리화학적 성질:맛','NFPA 위험성 코드:건강위험성 percent','NFPA 위험성 코드:화재위험성 percent','NFPA 위험성 코드:반응위험성 percent','NFPA 위험성 코드:특수위험성 percent','NFPA 위험성 코드:건강위험성','NFPA 위험성 코드:화재위험성','NFPA 위험성 코드:반응위험성',
     'NFPA 위험성 코드:특수위험성','안전/반응 위험 특성:반응성(안전성, 산화성)','안전/반응 위험 특성:부식성','안전/반응 위험 특성:피해야 할 조건','인체 유해성:일반 증상','인체 유해성:흡입','인체 유해성:피부','인체 유해성:안구','인체 유해성:경구','인체 유해성:기타',
