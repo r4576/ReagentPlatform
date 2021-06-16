@@ -1,7 +1,7 @@
 from django.conf import settings
-from content.reagent_property_data_Pubchem import get_query, get_Table_data
+from contents.reagent_property_data_Pubchem import get_query, get_Table_data
 
-from rest_framework import response, status
+from rest_framework import status
 from pymongo import MongoClient
 from datetime import datetime
 
@@ -9,6 +9,7 @@ import requests
 
 client = MongoClient(settings.DB_HOST)
 database = client.get_database(settings.DB_DATABASE)
+
 
 class Collector:
     def __init__(self):
@@ -151,11 +152,7 @@ class Collector:
                 self.__pubchemData['ReagentProperty']['Status'] = status.HTTP_404_NOT_FOUND
 
     def __sendSynonymDataToDBMS(self, casNo, data):
-        pass
+        requests.post("http://localhost:8089/create/synonym", data={'casNo':casNo, 'contents':data})
 
     def __sendReagentDataToDBMS(self, data):
-        try:
-            requests.post('http://0.0.0.0:8089/create/reagent', data=data, timeout=0.1)
-        except requests.exceptions.ReadTimeout:
-            pass
-        
+        requests.post("http://localhost:8089/create/reagent", data=data)
