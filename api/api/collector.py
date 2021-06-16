@@ -9,114 +9,95 @@ import requests
 
 client = MongoClient(settings.DB_HOST)
 database = client.get_database(settings.DB_DATABASE)
+collections = settings.DB_COLLECTIONS
 
 
 class Collector:
     def __init__(self):
         self.__data = { 
             'Keyword' : None,
+            'CasNo' : None,
             'Name' : None,
             'ReagentProperty' : None,
             'MaterialSafety' : None
         }
 
-        self.__keyword = None
-        self.__casNo = None
+    def execute(self, keyword):
+        self.__initializeData()
 
-        self.__pubchemData = { 
-            'ReagentProperty' : { 
-                'Status'   : None,
-                'Contents' : { } 
-            },
-            'Synonym' : { 
-                'Status'   : None,
-                'Contents' : [ ] 
-            }
-        }
-        
-    def initializeData(self):
+        self.__data['Keyword'] = keyword
+
+        self.__setCasNoMainName()
+        self.__setReagentProperty()
+        self.__setMaterialSafety()
+
+        return self.__data
+
+    def __initializeData(self):
         self.__data['Keyword'] = None
+        self.__data['CasNo'] = None
         self.__data['Name'] = None
         self.__data['ReagentProperty'] = None
         self.__data['MaterialSafety'] = None
 
-        self.__keyword = None
-        self.__casNo = None
-
-        self.__pubchemData['ReagentProperty']['Status'] = None
-        self.__pubchemData['Synonym']['Status'] = None
-
-    @property
-    def data(self):
-        return self.__data
-        
-    @data.setter
-    def data(self, keyword):
-        self.__keyword = keyword
-        self.__setNameCasNo()
-        self.__setReagentProperty()
-        self.__setMaterialSafety()
-
-    def execute(self, keyword):
-        self.initializeData()
-        self.data = keyword
-
-    def __setNameCasNo(self):
-        self.__data['Keyword'] = self.__keyword
-
-        collection = database.get_collection('api_synonym')
-        query = collection.find_one({'subName':self.__keyword})
+    def __setCasNoMainName(self):
+        collection = database.get_collection(collections['Synonym'])
+        query = collection.find_one({'subName':self.__data['Keyword']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Synonym Data from Database HTTP_200_OK".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
-            self.__casNo = query['casNo']
-            self.__data['Name'] = query['mainName']
+            print("[ /api/search?keyword={} ] {} {} Synonym Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            self.__data['CasNo'] = query['casNo']
+            self.__data['Name']  = query['mainName']
         else:
-            print("[ /api/search?keyword={} ] {} No Synonym Data from Database HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            self.__getSynonymDataFromPubchem()
-            if self.__pubchemData['Synonym']['Status'] == status.HTTP_200_OK:
-                print("[ /api/search?keyword={} ] {} Synonym Data from Pubchem HTTP_200_OK".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-                self.__casNo = self.__pubchemData['ReagentProperty']['Contents']['casNo']
-                self.__data['name'] = self.__pubchemData['ReagentProperty']['Contents']['name']
-                self.__sendSynonymDataToDBMS(self.__casNo, self.__pubchemData['Synonym']['Contents'])
-            elif self.__pubchemData['Synonym']['Status'] == status.HTTP_404_NOT_FOUND:
-                print("[ /api/search?keyword={} ] {} No Synonym Data from Pubchem HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            else:
-                print("[ /api/search?keyword={} ] {} HTTP_500_InternalServerError".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-        
+            print("[ /api/search?keyword={} ] {} No Synonym Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            self.__setCasNoMainNameFromPubChem(self.__data['Keyword'])
+
+    def __setCasNoMainNameFromPubChem(self, keyword):
+        print("[ /api/search?keyword={} ] {} Get Synonym Data from PubChem".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        synonym = get_query(keyword)
+        if synonym:
+            print("[ /api/search?keyword={} ] {} Synonym Data from PubChem HTTP_200_OK".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            self.__data['CasNo'] = synonym['casNo']
+            self.__data['Name'] = synonym['name']
+            self.__sendSynonymDataToDBMS(synonym)
+        else:
+            print("[ /api/search?keyword={} ] {} No Synonym Data from PubChem HTTP_404_NotFound".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))           
+
+    def __sendSynonymDataToDBMS(self, data):
+        requests.post("http://localhost:8089/create/synonym", data=data)
+
     def __setReagentProperty(self):
-        collections = database.get_collection('api_reagentpropertydata')
-        query = collections.find_one({'casNo':self.__casNo})
+        collection = database.get_collection(collections['Reagent Property'])
+        query = collection.find_one({'casNo':self.__data['CasNo']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Reagent property Data from Database HTTP_200_OK".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            print("[ /api/search?keyword={} ] {} {} Reagent property Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
             self.__data['ReagentProperty'] = { 'casNo' : query['casNo'],
                                                'formula' : query['formula'],
                                                'molecularWeight' : query['molecularWeight'],
                                                'meltingpoint' : query['meltingpoint'],
                                                'boilingpoint' : query['boilingpoint'],
                                                'density' : query['density'] }
-            self.__sendReagentDataToDBMS(self.__data['ReagentProperty'])
         else:
-            print("[ /api/search?keyword={} ] {} No Reagent property Data from Database HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            self.__getReagentDataFromPubchem()
-            if self.__pubchemData['ReagentProperty']['Status'] == status.HTTP_200_OK:
-                print("[ /api/search?keyword={} ] {} {} Reagent property Data from PubChem HTTP_200_OK".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
-                self.__data['ReagentProperty'] = { 'casNo' : self.__pubchemData['ReagentProperty']['Contents']['casNo'],
-                                                   'formula' : self.__pubchemData['ReagentProperty']['Contents']['formula'],
-                                                   'molecularWeight' : self.__pubchemData['ReagentProperty']['Contents']['molecularWeight'],
-                                                   'meltingpoint' : self.__pubchemData['ReagentProperty']['Contents']['meltingpoint'],
-                                                   'boilingpoint' : self.__pubchemData['ReagentProperty']['Contents']['boilingpoint'],
-                                                   'density' : self.__pubchemData['ReagentProperty']['Contents']['density'] }
-                self.__sendReagentDataToDBMS(self.__data['ReagentProperty'])
-            elif self.__pubchemData['ReagentProperty']['Status'] == status.HTTP_404_NOT_FOUND:
-                print("[ /api/search?keyword={} ] {} No Reagent Property Data from Pubchem HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            else:
-                print("[ /api/search?keyword={} ] {} HTTP_500_InternalServerError".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-
+            print("[ /api/search?keyword={} ] {} No Reagent property Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            self.__setReagentPropertyFromPubChem(self.__data['Keyword'])
+         
+    def __setReagentPropertyFromPubChem(self, keyword):
+        print("[ /api/search?keyword={} ] {} Get Reagent Property Data from PubChem".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        reagent = get_Table_data(keyword)
+        if reagent:
+            print("[ /api/search?keyword={} ] {} Reagent property Data from PubChem HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            self.__data['ReagentProperty'] = reagent
+            self.__sendReagentDataToDBMS(reagent)
+        else:
+            print("[ /api/search?keyword={} ] {} No Reagent Property Data from PubcheC HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+ 
+    def __sendReagentDataToDBMS(self, data):
+        requests.post("http://localhost:8089/create/reagent", data=data)
+  
     def __setMaterialSafety(self):
-        collections = database.get_collection('api_materialsafetydata')
-        query = collections.find_one({'casNo':self.__casNo})
+        collection = database.get_collection(collections['Material Safety'])
+        query = collection.find_one({'casNo':self.__data['CasNo']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Material Safety Data from Database HTTP_200_OK".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            print("[ /api/search?keyword={} ] {} {} Material Safety Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
             self.__data['MaterialSafety'] = { 'casNo' : query['casNo'],                     'phyStatus' : query['phyStatus'],               'phyColor' : query['phyColor'],
                                               'phySmell' : query['phySmell'],               'phyTaste' : query['phyTaste'],                 'NFPAHealthNum'  : query['NFPAHealthNum'],
                                               'NFPAFireNum'  : query['NFPAFireNum'],        'NFPAReactionNum'  : query['NFPAReactionNum'],  'NFPASpecialNum'  : query['NFPASpecialNum'],
@@ -129,30 +110,4 @@ class Collector:
                                               'accLeakage' : query['accLeakage'],           'accFire' : query['accFire'],                   'treStorage' : query['treStorage'],
                                               'treTreatcaution' : query['treTreatcaution'], 'treDisposal' : query['treDisposal'], }
         else:
-            print("[ /api/search?keyword={} ] {} No Material Safety Data from Database HTTP_404_NotFound".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-
-    def __getSynonymDataFromPubchem(self):
-        if self.__pubchemData['Synonym']['Status'] is None:
-            print("[ /api/search?keyword={} ] {} Get Synonym Data from Pubchem".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            synonym = get_query(self.__keyword)
-            if synonym:
-                self.__pubchemData['Synonym']['Status'] = status.HTTP_200_OK
-                self.__pubchemData['Synonym']['Contents'] = synonym
-            else:
-                self.__pubchemData['Synonym']['Status'] = status.HTTP_404_NOT_FOUND            
-
-    def __getReagentDataFromPubchem(self):
-        if self.__pubchemData['ReagentProperty']['Status'] is None:
-            print("[ /api/search?keyword={} ] {} Get Reagent Property Data from Pubchem".format(self.__keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
-            reagent = get_Table_data(self.__keyword)
-            if reagent:
-                self.__pubchemData['ReagentProperty']['Status'] = status.HTTP_200_OK
-                self.__pubchemData['ReagentProperty']['Contents'] = reagent
-            else:
-                self.__pubchemData['ReagentProperty']['Status'] = status.HTTP_404_NOT_FOUND
-
-    def __sendSynonymDataToDBMS(self, casNo, data):
-        requests.post("http://localhost:8089/create/synonym", data={'casNo':casNo, 'contents':data})
-
-    def __sendReagentDataToDBMS(self, data):
-        requests.post("http://localhost:8089/create/reagent", data=data)
+            print("[ /api/search?keyword={} ] {} No Material Safety Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))

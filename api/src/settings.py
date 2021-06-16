@@ -88,6 +88,7 @@ DB_DATABASE = db_info['ChemData']['database']
 DB_HOST = db_info['ChemData']['host']
 DB_USERNAME = db_info['ChemData']['username']
 DB_PASSWORD = db_info['ChemData']['password']
+DB_COLLECTIONS = db_info['ChemData']['collections']
 
 DATABASES = {
     'default': {

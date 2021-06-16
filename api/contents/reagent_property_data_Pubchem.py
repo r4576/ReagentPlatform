@@ -1,4 +1,5 @@
 import json
+from typing import final
 import requests
 from bs4 import BeautifulSoup
 
@@ -143,32 +144,41 @@ def get_Table_data(name):
     try :
         dict_properties = get_PropertyTable_data(name)
         CID = dict_properties.pop("CID")
-        file_data = {}
-        colunm_list = ["casNo", "name" , "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
-        file_data[colunm_list[0]] = get_CAS(CID)
-        file_data[colunm_list[1]] = get_commonname(CID)
-        file_data[colunm_list[2]] = dict_properties['MolecularFormula']
-        file_data[colunm_list[3]] = str(dict_properties['MolecularWeight'])
-        file_data[colunm_list[4]] = get_MeltingPoint(CID)
-        file_data[colunm_list[5]] = get_BoilingPoint(CID)
-        file_data[colunm_list[6]] = get_Density(CID)
 
+        file_data = {}
+        colunm_list = ["casNo", "formula" ,"molecularWeight" , "meltingpoint" , "boilingpoint" ,"density"]
+        file_data[colunm_list[0]] = get_CAS(CID)
+        file_data[colunm_list[1]] = dict_properties['MolecularFormula']
+        file_data[colunm_list[2]] = str(dict_properties['MolecularWeight'])
+        file_data[colunm_list[3]] = get_MeltingPoint(CID)
+        file_data[colunm_list[4]] = get_BoilingPoint(CID)
+        file_data[colunm_list[5]] = get_Density(CID)
     except:
         file_data = None
-    return file_data
+    finally:
+        return file_data
 
 
 def get_query(name):
     try:
         url = 'https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/%s/synonyms/json' %name
         jsonfile = recall_json_api(url)
-        query_list = jsonfile.get("InformationList").get("Information")[0].get("Synonym")
+
+        dict_properties = get_PropertyTable_data(name)
+        CID = dict_properties.pop("CID")
+
+        query_dict = {}
+        colunm_list = ["casNo", "name", "synonyms"]
+        query_dict[colunm_list[0]] = get_CAS(CID)
+        query_dict[colunm_list[1]] = get_commonname(CID)
+        query_dict[colunm_list[2]] = jsonfile.get("InformationList").get("Information")[0].get("Synonym")
     except:
-        query_list = None
-    return query_list
+        query_dict = None
+    finally:
+        return query_dict
 
 
 if __name__ == "__main__":
-    # print(get_query("Water"))
-    print(get_Table_data("water"))
+    print(get_query("Water"))
+    # print(get_Table_data("water"))
     # print(get_Table_data("wat"))
