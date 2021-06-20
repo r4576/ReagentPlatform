@@ -79,16 +79,9 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Key file path
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'networks.json')
 
-# Database
-
-db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
-DB_DATABASE = db_info['ChemData']['database']
-DB_HOST = db_info['ChemData']['host']
-DB_USERNAME = db_info['ChemData']['username']
-DB_PASSWORD = db_info['ChemData']['password']
-DB_COLLECTIONS = db_info['ChemData']['collections']
+# Database setting
 
 DATABASES = {
     'default': {
@@ -96,12 +89,18 @@ DATABASES = {
     }
 }
 
+# Network Address
+
+network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
+FRONT_SERVER = network_info['frontServer']
+API_SERVER = network_info['apiServer']
+AUTH_SERVER = network_info['authServer']
+DB_SERVER = network_info['dbServer']
+
 # Cors setting
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    'https://localhost:80',
-]
+CORS_ORIGIN_WHITELIST = [ FRONT_SERVER, API_SERVER, AUTH_SERVER, DB_SERVER ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = (
     'GET',
