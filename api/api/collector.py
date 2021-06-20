@@ -11,7 +11,7 @@ client = MongoClient(settings.DB_HOST)
 database = client.get_database(settings.DB_DATABASE)
 collections = settings.DB_COLLECTIONS
 
-DB_SERVER = settings.dbServer
+dbServer = settings.DB_SERVER
 
 
 class Collector:
@@ -65,7 +65,7 @@ class Collector:
             print("[ /api/search?keyword={} ] {} No Synonym Data from PubChem HTTP_404_NotFound".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))           
 
     def __sendSynonymDataToDBMS(self, data):
-        requests.post(DB_SERVER + "/create/synonym", data=data)
+        requests.post(dbServer + "/create/synonym", data=data)
 
     def __setReagentProperty(self):
         collection = database.get_collection(collections['Reagent Property'])
@@ -93,7 +93,7 @@ class Collector:
             print("[ /api/search?keyword={} ] {} No Reagent Property Data from PubcheC HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
  
     def __sendReagentDataToDBMS(self, data):
-        requests.post(DB_SERVER + "/create/reagent", data=data)
+        requests.post(dbServer + "/create/reagent", data=data)
   
     def __setMaterialSafety(self):
         collection = database.get_collection(collections['Material Safety'])
