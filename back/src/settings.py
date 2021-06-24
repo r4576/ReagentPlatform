@@ -27,9 +27,7 @@ SECRET_KEY = '6^#(fznj(p$byy)a8f&vh$dvy8_zz&-da@v2+lq&@bwuzz4+xn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,12 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'api.apps.ApiConfig',
-    'accounts.apps.AccountsConfig',
-
     'rest_framework',
     'corsheaders',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -80,13 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
-# Key file path
-
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
-GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'googleapi.json')
 
 # Database
 
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
 db_database = db_info['altas']['database']
 db_host = db_info['altas']['host']
@@ -163,12 +155,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
-# Google API Setting
-
-GOOGLE_AUTH_SCOPES = [
-    'openid',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile',
-]
