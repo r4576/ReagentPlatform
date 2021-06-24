@@ -1,11 +1,10 @@
-from logging import error
-from typing import final
 from django.shortcuts import redirect
 from django.conf import settings
 from django.contrib.auth.models import User
 
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from google_auth_oauthlib.flow import Flow
 from google.oauth2 import id_token
@@ -26,10 +25,14 @@ googleAuthorizationURL, _ = flow.authorization_url(
 )
 
 # Kakaotalk Social Login API
-kakaoAuthorizationURL = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+ settings.KAKAO_REST_API_KEY + "&redirect_uri=" + settings.KAKAO_REDIRECT_URI
+kakaoAuthorizationURL = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=" + settings.KAKAO_REST_API_KEY + "&redirect_uri=" + settings.KAKAO_REDIRECT_URI
 kakaoTokenURL = "https://kauth.kakao.com/oauth/token"
 kakaoProfileRequestURL = "https://kapi.kakao.com/v2/user/me"
 
+# Naver Social Login API
+naverAuthorizationURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + settings.NAVER_CLIENT_ID + "&redirect_uri=" + settings.NAVER_REDIRECT_URI + "&state="
+naverTokenURL = "https://nid.naver.com/oauth2.0/token"
+naverProfileRequestURL = "https://openapi.naver.com/v1/nid/me"
 
 class GoogleLogin(APIView):
     def get(self, request):
@@ -63,8 +66,8 @@ class KakaoLogin(APIView):
 class KakaoCallback(APIView):
     def get(self, request, format=None):
         try:
-            accessToken = self.getAccessToken(request)
-            userProfile = self.getUserProfile(accessToken)
+            accessToken = self.__getAccessToken(request)
+            userProfile = self.__getUserProfile(accessToken)
             loginStatus = status.HTTP_200_OK
 
             Profile.objects.get(code=userProfile['id'])
@@ -80,7 +83,7 @@ class KakaoCallback(APIView):
         finally:
             return redirect(settings.FRONT_SERVER, status=loginStatus)
 
-    def getAccessToken(self, request):
+    def __getAccessToken(self, request):
         tokenParameter = { }
         tokenParameter['grant_type'] = 'authorization_code'
         tokenParameter['client_id'] = settings.KAKAO_REST_API_KEY
@@ -97,7 +100,7 @@ class KakaoCallback(APIView):
         else:
             raise Exception("[    Get Access Token    ] {} HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    def getUserProfile(self, accessToken):
+    def __getUserProfile(self, accessToken):
         profileParameter = { }
         profileParameter['Authorization'] = "Bearer " + accessToken
 
@@ -110,5 +113,67 @@ class KakaoCallback(APIView):
             return userProfile
         elif response.status_code == 400:
             raise Exception("[    Get User Profile    ] {} HTTP_400_BAD_REQUEST".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_400_BAD_REQUEST)
+        else:
+            raise Exception("[    Get User Profile    ] {} HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class NaverLogin(APIView):
+    def get(self, request):
+        return redirect(naverAuthorizationURL + request.COOKIES['csrftoken'])
+        
+
+class NaverCallback(APIView):
+    def get(self, request):
+        try:
+            loginStatus = status.HTTP_200_OK
+            accessToken = self.__getAccessToken(request)
+            userProfile = self.__getUserProfile(accessToken)
+            Profile.objects.get(code=userProfile['id'])
+        except Profile.DoesNotExist:
+            newUser = User.objects.create(email=userProfile['email'],
+                                          username=userProfile['name'])
+            Profile.objects.create(user=newUser,
+                                   code=userProfile['id'],
+                                   history="")
+        except Exception as e:
+            errMessage, loginStatus = e.args
+            print(errMessage)
+        finally:
+            return redirect(settings.FRONT_SERVER, status=loginStatus)
+
+    def __getAccessToken(self, request):
+        tokenParameter = { }
+        tokenParameter['grant_type'] = 'authorization_code'
+        tokenParameter['client_id'] = settings.NAVER_CLIENT_ID
+        tokenParameter['client_secret'] = settings.NAVER_CLIENT_SECRET
+        tokenParameter['code'] = request.GET.get('code')
+        tokenParameter['state'] = request.GET.get('state')
+        
+        response = requests.post(naverTokenURL, data=tokenParameter)
+        
+        if not 'error' in json.loads(response.text):
+            return json.loads(response.text)['access_token']
+        elif 'error' in json.loads(response.text):
+            raise Exception("[    Get Access Token    ] {} HTTP_400_BAD_REQUEST".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_400_BAD_REQUEST)
+        else:
+            raise Exception("[    Get Access Token    ] {} HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def __getUserProfile(self, accessToken):
+        profileParameter = { }
+        profileParameter['Authorization'] = "Bearer " + accessToken
+
+        response = requests.post(naverProfileRequestURL, headers=profileParameter)
+
+        if response.status_code == 200:
+            userProfile = json.loads(response.text)['response']
+            if not 'email' in userProfile:
+                userProfile['email'] = ""
+            return userProfile
+        elif response.status_code == 401:
+            raise Exception("[    Get User Profile    ] {} HTTP_401_UNAUTHORIZED".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_401_UNAUTHORIZED)
+        elif response.status_code == 403:
+            raise Exception("[    Get User Profile    ] {} HTTP_403_FORBIDDEN".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_403_FORBIDDEN)
+        elif response.status_code == 404:
+            raise Exception("[    Get User Profile    ] {} HTTP_404_NOT_FOUND".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_404_NOT_FOUND)
         else:
             raise Exception("[    Get User Profile    ] {} HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -79,6 +79,7 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
 GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'googleapi.json')
 KAKAO_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'kakaoapi.json')
+NAVER_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'naverapi.json')
 NETWORK_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'networks.json')
 
 # Database
@@ -113,11 +114,8 @@ DATABASES = {
 
 # Google API Setting
 
-GOOGLE_AUTH_SCOPES = [
-    'openid',
-    'https://www.googleapis.com/auth/userinfo.email',
-    'https://www.googleapis.com/auth/userinfo.profile',
-]
+google_api_info = json.loads(open(GOOGLE_API_SETTINGS_FILE).read())
+GOOGLE_AUTH_SCOPES = google_api_info['GOOGLE_AUTH_SCOPES']
 
 # Kakao API Setting
 
@@ -128,6 +126,13 @@ KAKAO_JAVASCRIPT_KEY = kakao_api_info["javascript_key"]
 KAKAO_ADMIN_KEY = kakao_api_info["admin_key"]
 KAKAO_CLIENT_SECRET = kakao_api_info["client_secret"]
 KAKAO_REDIRECT_URI = kakao_api_info["redirect_uris"][0]
+
+# Naver API Setting
+
+naver_api_info = json.loads(open(NAVER_API_SETTINGS_FILE).read())
+NAVER_CLIENT_ID = naver_api_info['client_id']
+NAVER_CLIENT_SECRET = naver_api_info['client_secret']
+NAVER_REDIRECT_URI = naver_api_info['redirect_uris'][0]
 
 # Network Address
 
