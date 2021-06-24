@@ -110,7 +110,7 @@ DATABASES = {
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-    'localhost:80',
+    'https://localhost:80',
 ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = (
