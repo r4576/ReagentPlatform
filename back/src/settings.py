@@ -16,7 +16,6 @@ import djongo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -78,13 +77,12 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Database
 
-DATABASE_SETTINGS_FILE = os.path.join(
-    os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
 db_database = db_info['altas']['database']
 db_host = db_info['altas']['host']
-db_username = db_info['altas']['username']
-db_password = db_info['altas']['password']
+db_username=db_info['altas']['username']
+db_password=db_info['altas']['password']
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -100,7 +98,7 @@ DATABASES = {
             'loggers': {
                 'djongo': {
                     'level': 'DEBUG',
-                    'propagate': False,
+                    'propagate': False,                        
                 }
             },
         },
@@ -111,7 +109,7 @@ DATABASES = {
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-    'https://localhost:80',
+    'localhost:80',
 ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = (
