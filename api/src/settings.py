@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import json
-import djongo
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,8 +26,9 @@ SECRET_KEY = '6^#(fznj(p$byy)a8f&vh$dvy8_zz&-da@v2+lq&@bwuzz4+xn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'localhost',
+]
 
 # Application definition
 
@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'api.apps.ApiConfig',
+
     'rest_framework',
     'corsheaders',
-    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,43 +77,38 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
+# Key file path
 
-# Database
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'networks.json')
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, '.key'), 'db_settings.json')
+# Database setting
+
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
-db_database = db_info['altas']['database']
-db_host = db_info['altas']['host']
-db_username=db_info['altas']['username']
-db_password=db_info['altas']['password']
+DB_DATABASE = db_info['ChemData']['database']
+DB_HOST = db_info['ChemData']['host']
+DB_USERNAME = db_info['ChemData']['username']
+DB_PASSWORD = db_info['ChemData']['password']
+DB_COLLECTIONS = db_info['ChemData']['collections']
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': db_database,
-        'CLIENT': {
-            'host': db_host,
-            'username': db_username,
-            'password': db_password,
-            'authMechanism': 'SCRAM-SHA-1'
-        },
-        'LOGGING': {
-            'version': 1,
-            'loggers': {
-                'djongo': {
-                    'level': 'DEBUG',
-                    'propagate': False,                        
-                }
-            },
-        },
     }
 }
+
+# Network Address
+
+network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
+FRONT_SERVER = network_info['frontServer']
+API_SERVER = network_info['apiServer']
+AUTH_SERVER = network_info['authServer']
+DB_SERVER = network_info['dbServer']
 
 # Cors setting
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    'https://localhost:80',
-]
+CORS_ORIGIN_WHITELIST = [ FRONT_SERVER, API_SERVER, AUTH_SERVER, DB_SERVER ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = (
     'GET',

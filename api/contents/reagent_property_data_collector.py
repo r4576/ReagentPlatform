@@ -155,7 +155,7 @@ except:
     pass
 
 
-file_path = "./Reagent_property_data.json"
+file_path = "./data/Reagent_property_data.json"
 
 with open(file_path, 'w', encoding = 'utf-8') as make_file:
     json.dump(filedata_list, make_file, ensure_ascii=False)
