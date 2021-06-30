@@ -1,10 +1,5 @@
-.key/
-.vscode/
-frontend/platform/node_modules/
-frontend/node_modules/
-service/dataset/__pycache__/
-back/api/__pycache__/
-back/src/__pycache__/
 __pycache__/
-.gitignore
+.vscode/
 node_modules/
+
+keys/
