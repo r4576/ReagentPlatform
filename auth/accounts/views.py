@@ -1,3 +1,4 @@
+from logging import exception
 from django.shortcuts import redirect
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -8,6 +9,7 @@ from rest_framework.response import Response
 
 from google_auth_oauthlib.flow import Flow
 from google.oauth2 import id_token
+from google.auth.exceptions import GoogleAuthError, DefaultCredentialsError
 from google.auth.transport.requests import Request
 
 from accounts.models import Profile
@@ -41,26 +43,34 @@ class GoogleLogin(APIView):
 
 class GoogleCallback(APIView):
     def get(self, request, format=None):
-        flow.fetch_token(authorization_response=request.build_absolute_uri().replace('http:', 'https:'))
-        creds = flow.credentials
-        userinfo = id_token.verify_oauth2_token(creds._id_token, Request(), creds._client_id)
-        
         try:
+            flow.fetch_token(authorization_response=request.build_absolute_uri().replace('http:', 'https:'))
+            creds = flow.credentials
+            userinfo = id_token.verify_oauth2_token(creds._id_token, Request(), creds._client_id)
+            loginStatus = status.HTTP_200_OK
+            
             user = Profile.objects.get(code=userinfo['sub'])
             print("[{}] GoogleLogin User:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), user.code))
+        except GoogleAuthError as e:
+            loginStatus = status.HTTP_401_UNAUTHORIZED
+            print("[{}] GoogleLogin {}".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), e))
+        except DefaultCredentialsError as e:
+            loginStatus = status.HTTP_503_SERVICE_UNAVAILABLE
+            print("[{}] GoogleLogin {}".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), e))
         except Profile.DoesNotExist:
             newUser = User.objects.create(email=userinfo['email'],
-                                          username=userinfo['name'],
-                                          first_name=userinfo['given_name'],
-                                          last_name=userinfo['family_name'])
+                                          username=datetime.now().strftime('%y%m%d%H%M%S'))
             newProfile = Profile.objects.create(user=newUser,
-                                   code=userinfo['sub'],
-                                   history="")
+                                                code=userinfo['sub'],
+                                                userName=userinfo['name'],
+                                                history="")
+            loginStatus = status.HTTP_200_OK
             print("[{}] GoogleLogin NewUser:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), newProfile.code))
-        except Exception as e:
-            print("[{}] GoogleLogin {}".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), e))
+        except:
+            loginStatus = status.HTTP_500_INTERNAL_SERVER_ERROR
+            print("[{}] GoogleLogin {}".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), loginStatus))
         finally:
-            redirect(settings.FRONT_SERVER)
+            return redirect(settings.FRONT_SERVER, status=loginStatus)
 
 
 class KakaoLogin(APIView):
@@ -79,10 +89,11 @@ class KakaoCallback(APIView):
             print("[{}] KakaoLogin User:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), user.code))
         except Profile.DoesNotExist:
             newUser = User.objects.create(email=userProfile['kakao_account']['email'],
-                                          username=userProfile['kakao_account']['profile']['nickname'])
+                                          username=datetime.now().strftime('%y%m%d%H%M%S'))
             newProfile = Profile.objects.create(user=newUser,
-                                   code=userProfile['id'],
-                                   history="")
+                                                code=userProfile['id'],
+                                                userName=userProfile['kakao_account']['profile']['nickname'],
+                                                history="")
             print("[{}] KakaoLogin NewUser:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), newProfile.code))
         except Exception as e:
             errMessage, loginStatus = e.args
@@ -115,8 +126,6 @@ class KakaoCallback(APIView):
 
         if response.status_code == 200:
             userProfile = json.loads(response.text)
-            if not 'email' in userProfile['kakao_account']:
-                userProfile['kakao_account']['email'] = ""
             return userProfile
         elif response.status_code == 400:
             raise Exception("[{}] KakaoLogin GetUserProfile HTTP_400_BAD_REQUEST".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_400_BAD_REQUEST)
@@ -132,17 +141,19 @@ class NaverLogin(APIView):
 class NaverCallback(APIView):
     def get(self, request):
         try:
-            loginStatus = status.HTTP_200_OK
             accessToken = self.__getAccessToken(request)
             userProfile = self.__getUserProfile(accessToken)
             user = Profile.objects.get(code=userProfile['id'])
+            loginStatus = status.HTTP_200_OK
             print("[{}] NaverLogin User:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), user.code))
         except Profile.DoesNotExist:
             newUser = User.objects.create(email=userProfile['email'],
-                                          username=userProfile['name'])
+                                          username=datetime.now().strftime('%y%m%d%H%M%S'))
             newProfile = Profile.objects.create(user=newUser,
-                                   code=userProfile['id'],
-                                   history="")
+                                                code=userProfile['id'],
+                                                userName=userProfile['name'],
+                                                history="")
+            loginStatus = status.HTTP_200_OK
             print("[{}] NaverLogin NewUser:{} HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), newProfile.code))
         except Exception as e:
             errMessage, loginStatus = e.args
@@ -159,10 +170,10 @@ class NaverCallback(APIView):
         tokenParameter['state'] = request.GET.get('state')
         
         response = requests.post(naverTokenURL, data=tokenParameter)
-        
-        if not 'error' in json.loads(response.text):
+
+        if response.status_code == 200:
             return json.loads(response.text)['access_token']
-        elif 'error' in json.loads(response.text):
+        elif response.status_code == 400:
             raise Exception("[{}] NaverLogin GetAccessToken HTTP_400_BAD_REQUEST".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_400_BAD_REQUEST)
         else:
             raise Exception("[{}] NaverLogin GetAccessToken HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -175,8 +186,6 @@ class NaverCallback(APIView):
 
         if response.status_code == 200:
             userProfile = json.loads(response.text)['response']
-            if not 'email' in userProfile:
-                userProfile['email'] = ""
             return userProfile
         elif response.status_code == 401:
             raise Exception("[{}] NaverLogin GetUserProfile HTTP_401_UNAUTHORIZED".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_401_UNAUTHORIZED)
@@ -186,3 +195,4 @@ class NaverCallback(APIView):
             raise Exception("[{}] NaverLogin GetUserProfile HTTP_404_NOT_FOUND".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_404_NOT_FOUND)
         else:
             raise Exception("[{}] NaverLogin GetUserProfile HTTP_500_INTERNAL_SERVER_ERROR".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S')), status.HTTP_500_INTERNAL_SERVER_ERROR)
+
