@@ -1,5 +1,7 @@
+var dateFormat = require("dateformat");
+
 var path = require('path');
-var baseDir = path.dirname(path.dirname(__dirname));
+var baseDir = path.dirname(__dirname);
 
 var keyFile = path.join(path.join(baseDir, 'keys'), 'db_settings.json');
 var dbKey = require(keyFile);
@@ -9,9 +11,11 @@ mongoose.connect(dbKey['ChemData']['host'], {
   useNewUrlParser: true,
   useUnifiedTopology: true, 
 }).then(() => {
-    console.log("[  MongoDB Altas  ] Connect to Mongo DB Atlas");
+    var now = new Date();
+    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas");
 }).catch((err) => {
-    console.log("[  MongoDB Altas  ] Connect to Mongo DB Atlas Failed...");
+    var now = new Date();
+    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas Failed...");
     console.log(err);
 });
 
