@@ -10,13 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
-
 import os
 import json
+import pymongo
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
@@ -76,11 +75,11 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 
 # Key file path
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
-GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'googleapi.json')
-KAKAO_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'kakaoapi.json')
-NAVER_API_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'naverapi.json')
-NETWORK_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'networks.json')
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
+GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'googleapi.json')
+KAKAO_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'kakaoapi.json')
+NAVER_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'naverapi.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
 
 # Database
 
@@ -90,6 +89,7 @@ DB_HOST = db_info['Accounts']['host']
 DB_USERNAME = db_info['Accounts']['username']
 DB_PASSWORD = db_info['Accounts']['password']
 
+pymongo.mongo_client.MongoClient.HOST = DB_HOST
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -116,6 +116,7 @@ DATABASES = {
 
 google_api_info = json.loads(open(GOOGLE_API_SETTINGS_FILE).read())
 GOOGLE_AUTH_SCOPES = google_api_info['GOOGLE_AUTH_SCOPES']
+GOOGLE_REDIRECT_URI = google_api_info['web']['redirect_uris'][0]
 
 # Kakao API Setting
 
