@@ -9,6 +9,7 @@ class Profile(models.Model):
 
     id = models.ObjectIdField(db_column='_id', primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    userName = models.TextField()
     code = models.TextField()
     history = models.TextField()
 
