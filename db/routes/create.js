@@ -28,7 +28,9 @@ router.post('/synonym', function(req, res, next) {
         casNo : req.body['casNo']
       };
       synonym.create(newSynonym);
-      console.log("[  Synonyms Data  ] " + newSubName + " added")
+
+      var now = new Date();
+      console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] " + newSubName + " added")
     });
   });
 });
@@ -39,7 +41,9 @@ router.post('/reagent', function(req, res, next) {
   reagent.findOne({casNo : req.body['casNo'] }, function(err, result){
     if(result != null) return;
     reagent.create(req.body);
-    console.log("[ ReagentProperty ] " + req.body['casNo'] + " added")
+    
+    var now = new Date();
+    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] " + req.body['casNo'] + " added")
   });
 });
 

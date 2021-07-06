@@ -79,12 +79,13 @@ WSGI_APPLICATION = 'src.wsgi.application'
 
 # Key file path
 
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'db_settings.json')
-NETWORK_SETTINGS_FILE = os.path.join(os.path.join(ROOT_DIR, 'keys'), 'networks.json')
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
 
 # Database setting
 
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
+
 DB_DATABASE = db_info['ChemData']['database']
 DB_HOST = db_info['ChemData']['host']
 DB_USERNAME = db_info['ChemData']['username']
@@ -93,7 +94,7 @@ DB_COLLECTIONS = db_info['ChemData']['collections']
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
+        
     }
 }
 

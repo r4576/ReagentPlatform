@@ -46,23 +46,23 @@ class Collector:
         collection = database.get_collection(collections['Synonym'])
         query = collection.find_one({'subName':self.__data['Keyword']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Synonym Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            print("[{}] keyword={} {} Synonym Data from Database HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword'], query['_id']))
             self.__data['CasNo'] = query['casNo']
             self.__data['Name']  = query['mainName']
         else:
-            print("[ /api/search?keyword={} ] {} No Synonym Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={} No Synonym Data from Database HTTP_404_NotFound".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword']))
             self.__setCasNoMainNameFromPubChem(self.__data['Keyword'])
 
     def __setCasNoMainNameFromPubChem(self, keyword):
-        print("[ /api/search?keyword={} ] {} Get Synonym Data from PubChem".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        print("[{}] keyword={} Get Synonym Data from PubChem".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), keyword))
         synonym = get_query(keyword)
         if synonym:
-            print("[ /api/search?keyword={} ] {} Synonym Data from PubChem HTTP_200_OK".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={}  Synonym Data from PubChem HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), keyword))
             self.__data['CasNo'] = synonym['casNo']
             self.__data['Name'] = synonym['name']
             self.__sendSynonymDataToDBMS(synonym)
         else:
-            print("[ /api/search?keyword={} ] {} No Synonym Data from PubChem HTTP_404_NotFound".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))           
+            print("[{}] keyword={} No Synonym Data from PubChem HTTP_404_NotFound".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), keyword))           
 
     def __sendSynonymDataToDBMS(self, data):
         requests.post(dbServer + "/create/synonym", data=data)
@@ -71,7 +71,7 @@ class Collector:
         collection = database.get_collection(collections['Reagent Property'])
         query = collection.find_one({'casNo':self.__data['CasNo']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Reagent property Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            print("[{}] keyword={} {} Reagent property Data from Database HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), query['_id'], self.__data['Keyword']))
             self.__data['ReagentProperty'] = { 'casNo' : query['casNo'],
                                                'formula' : query['formula'],
                                                'molecularWeight' : query['molecularWeight'],
@@ -79,18 +79,18 @@ class Collector:
                                                'boilingpoint' : query['boilingpoint'],
                                                'density' : query['density'] }
         else:
-            print("[ /api/search?keyword={} ] {} No Reagent property Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={} No Reagent property Data from Database HTTP_404_NotFound".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword']))
             self.__setReagentPropertyFromPubChem(self.__data['Keyword'])
          
     def __setReagentPropertyFromPubChem(self, keyword):
-        print("[ /api/search?keyword={} ] {} Get Reagent Property Data from PubChem".format(keyword, datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        print("[{}] keyword={} Get Reagent Property Data from PubChem".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), keyword))
         reagent = get_Table_data(keyword)
         if reagent:
-            print("[ /api/search?keyword={} ] {} Reagent property Data from PubChem HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={} Reagent property Data from PubChem HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword']))
             self.__data['ReagentProperty'] = reagent
             self.__sendReagentDataToDBMS(reagent)
         else:
-            print("[ /api/search?keyword={} ] {} No Reagent Property Data from PubcheC HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={} No Reagent Property Data from PubcheC HTTP_404_NotFound".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword']))
  
     def __sendReagentDataToDBMS(self, data):
         requests.post(dbServer + "/create/reagent", data=data)
@@ -99,7 +99,7 @@ class Collector:
         collection = database.get_collection(collections['Material Safety'])
         query = collection.find_one({'casNo':self.__data['CasNo']})
         if query:
-            print("[ /api/search?keyword={} ] {} {} Material Safety Data from Database HTTP_200_OK".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'), query['_id']))
+            print("[{}] keyword={} {} Material Safety Data from Database HTTP_200_OK".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), query['_id'], self.__data['Keyword']))
             self.__data['MaterialSafety'] = { 'casNo' : query['casNo'],                     'phyStatus' : query['phyStatus'],               'phyColor' : query['phyColor'],
                                               'phySmell' : query['phySmell'],               'phyTaste' : query['phyTaste'],                 'NFPAHealthNum'  : query['NFPAHealthNum'],
                                               'NFPAFireNum'  : query['NFPAFireNum'],        'NFPAReactionNum'  : query['NFPAReactionNum'],  'NFPASpecialNum'  : query['NFPASpecialNum'],
@@ -112,4 +112,4 @@ class Collector:
                                               'accLeakage' : query['accLeakage'],           'accFire' : query['accFire'],                   'treStorage' : query['treStorage'],
                                               'treTreatcaution' : query['treTreatcaution'], 'treDisposal' : query['treDisposal'], }
         else:
-            print("[ /api/search?keyword={} ] {} No Material Safety Data from Database HTTP_404_NotFound".format(self.__data['Keyword'], datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+            print("[{}] keyword={} No Material Safety Data from Database HTTP_404_NotFound".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), self.__data['Keyword']))
