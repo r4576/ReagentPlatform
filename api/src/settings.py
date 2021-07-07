@@ -26,8 +26,22 @@ SECRET_KEY = '6^#(fznj(p$byy)a8f&vh$dvy8_zz&-da@v2+lq&@bwuzz4+xn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Key file path
+
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
+
+# Network Address
+
+network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
+BASE_URL = network_info['base']
+FRONT_SERVER = network_info['frontServer']
+API_SERVER = network_info['apiServer']
+AUTH_SERVER = network_info['authServer']
+DB_SERVER = network_info['dbServer']
+
 ALLOWED_HOSTS = [
-    'localhost',
+    API_SERVER['URN']
 ]
 
 # Application definition
@@ -77,11 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'src.wsgi.application'
 
-# Key file path
-
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
-NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
-
 # Database setting
 
 db_info = json.loads(open(DATABASE_SETTINGS_FILE).read())
@@ -98,18 +107,10 @@ DATABASES = {
     }
 }
 
-# Network Address
-
-network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
-FRONT_SERVER = network_info['frontServer']
-API_SERVER = network_info['apiServer']
-AUTH_SERVER = network_info['authServer']
-DB_SERVER = network_info['dbServer']
-
 # Cors setting
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [ FRONT_SERVER, API_SERVER, AUTH_SERVER, DB_SERVER ]
+CORS_ORIGIN_WHITELIST = [ FRONT_SERVER['URL'] ]
 CORS_URLS_REGEX = r'^/api/.*$'
 CORS_ALLOW_METHODS = (
     'GET',

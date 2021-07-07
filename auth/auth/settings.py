@@ -27,8 +27,26 @@ SECRET_KEY = '-h$xzz_o32@=@gjwl##_v&(@-1kn68(em^56h7r86@$9)6_!qa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Key file path
 
+DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
+GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'googleapi.json')
+KAKAO_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'kakaoapi.json')
+NAVER_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'naverapi.json')
+NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
+
+# Network Address
+
+network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
+BASE_URL = network_info['base']
+FRONT_SERVER = network_info['frontServer']
+API_SERVER = network_info['apiServer']
+AUTH_SERVER = network_info['authServer']
+DB_SERVER = network_info['dbServer']
+
+ALLOWED_HOSTS = [
+    BASE_URL['URN']
+]
 
 # Application definition
 
@@ -72,14 +90,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'auth.wsgi.application'
-
-# Key file path
-
-DATABASE_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'db_settings.json')
-GOOGLE_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'googleapi.json')
-KAKAO_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'kakaoapi.json')
-NAVER_API_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'naverapi.json')
-NETWORK_SETTINGS_FILE = os.path.join(os.path.join(BASE_DIR, 'keys'), 'networks.json')
 
 # Database
 
@@ -134,14 +144,6 @@ naver_api_info = json.loads(open(NAVER_API_SETTINGS_FILE).read())
 NAVER_CLIENT_ID = naver_api_info['client_id']
 NAVER_CLIENT_SECRET = naver_api_info['client_secret']
 NAVER_REDIRECT_URI = naver_api_info['redirect_uris'][0]
-
-# Network Address
-
-network_info = json.loads(open(NETWORK_SETTINGS_FILE).read())
-FRONT_SERVER = network_info['frontServer']
-API_SERVER = network_info['apiServer']
-AUTH_SERVER = network_info['authServer']
-DB_SERVER = network_info['dbServer']
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

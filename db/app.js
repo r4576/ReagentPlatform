@@ -3,6 +3,7 @@ var express = require('express');
 var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var dateFormat = require("dateformat");
 
 var createRouter = require('./routes/create');
 
@@ -23,6 +24,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+  console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] " + err.message);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
