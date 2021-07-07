@@ -25,8 +25,3 @@ def save(collection, jsonFilePath, keyFilePath=None):
                 data[value] = data.pop(key)
     
     # collection.insert_many(newData)
-
-
-if __name__ == "__main__":
-    # save(collection='api_reagentpropertydata', jsonFilePath='dataset/ReagentPropertyData.json')
-    save(collection='api_materialsafetydata', jsonFilePath='dataset/material_safety_data.json', keyFilePath='dataset/material_safety_column.json')
