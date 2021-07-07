@@ -29,8 +29,7 @@ router.post('/synonym', function(req, res, next) {
       };
       synonym.create(newSynonym);
 
-      var now = new Date();
-      console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] " + newSubName + " added")
+      console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] " + newSubName + " added")
     });
   });
 });
@@ -42,8 +41,7 @@ router.post('/reagent', function(req, res, next) {
     if(result != null) return;
     reagent.create(req.body);
     
-    var now = new Date();
-    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] " + req.body['casNo'] + " added")
+    console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] " + req.body['casNo'] + " added")
   });
 });
 

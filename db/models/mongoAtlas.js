@@ -11,11 +11,9 @@ mongoose.connect(dbKey['ChemData']['host'], {
   useNewUrlParser: true,
   useUnifiedTopology: true, 
 }).then(() => {
-    var now = new Date();
-    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas");
+    console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas");
 }).catch((err) => {
-    var now = new Date();
-    console.log("[" + dateFormat(now, "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas Failed...");
+    console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] Connect to Mongo DB Atlas Failed...");
     console.log(err);
 });
 
