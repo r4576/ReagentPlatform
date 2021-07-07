@@ -1,41 +1,37 @@
-// request require
 var express = require("express");
 var router = express.Router();
-var httpRequest = require("XMLHttpRequest");
 var request = require("request");
+
+var path = require("path");
+var baseDir = path.dirname(__dirname);
+var networkFile = path.join(path.join(baseDir, 'keys'), 'networks.json');
+var network = require(networkFile);
 
 router.get("/", function (req, res, next) {
   let reagent = req.query.reagent;
-  console.log(req.query);
-  request(
-    {
+  request({
       method: "GET",
-      // reagent : A,B,C 형태로 있어야함.
-      uri: "http://127.0.0.1:8000/api/search?keyword=" + reagent,
-    },
-    function (error, response, body) {
+      uri: network['apiServer']['URL'] + ":" + network['apiServer']['Port'] + "/api/search?keyword=" + reagent,
+    },function (error, response, body) {
       if (error) {
         throw error;
       } else {
-        const allResult = [];
-        console.log("Receive Data !");
-        // console.log(`Before Parsing Data ! : ${response.body}`);
-        const allResultJson = JSON.parse(response.body);
-        for (let i = 0; i < allResultJson.length; i++) {
+        const data = [];
+        const apiResponse = JSON.parse(response.body);
+        for (let i = 0; i < apiResponse.length; i++) {
           let result = {
-            reagentName: allResultJson[i].Name,
-            casNo: allResultJson[i].ReagentProperty.casNo,
-            formula: allResultJson[i].ReagentProperty.formula,
-            molecularWeight: allResultJson[i].ReagentProperty.molecularWeight,
-            meltingpoint: allResultJson[i].ReagentProperty.meltingpoint,
-            boilingpoint: allResultJson[i].ReagentProperty.boilingpoint,
-            density: allResultJson[i].ReagentProperty.density,
-            MaterialSafety: allResultJson[i].MaterialSafety,
+            reagentName: apiResponse[i].Name,
+            casNo: apiResponse[i].ReagentProperty.casNo,
+            formula: apiResponse[i].ReagentProperty.formula,
+            molecularWeight: apiResponse[i].ReagentProperty.molecularWeight,
+            meltingpoint: apiResponse[i].ReagentProperty.meltingpoint,
+            boilingpoint: apiResponse[i].ReagentProperty.boilingpoint,
+            density: apiResponse[i].ReagentProperty.density,
+            MaterialSafety: apiResponse[i].MaterialSafety,
           };
-          allResult.push(result);
+          data.push(result);
         }
-        console.log("Parsing Success!!");
-        res.render("tables.ejs", { data: allResult });
+        res.render("tables", { data: data });
       }
     }
   );

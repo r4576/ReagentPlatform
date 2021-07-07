@@ -11,7 +11,7 @@ client = MongoClient(settings.DB_HOST)
 database = client.get_database(settings.DB_DATABASE)
 collections = settings.DB_COLLECTIONS
 
-dbServer = settings.DB_SERVER
+dbServer = settings.DB_SERVER['URL'] + ":" + settings.DB_SERVER['Port']
 
 
 class Collector:

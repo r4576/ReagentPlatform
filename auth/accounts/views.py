@@ -70,7 +70,7 @@ class GoogleCallback(APIView):
             loginStatus = status.HTTP_500_INTERNAL_SERVER_ERROR
             print("[{}] GoogleLogin {}".format(datetime.now().strftime('%d/%b/%Y %H:%M:%S'), loginStatus))
         finally:
-            return redirect(settings.FRONT_SERVER, status=loginStatus)
+            return redirect(settings.BASE_URL['URL'], status=loginStatus)
 
 
 class KakaoLogin(APIView):
@@ -99,7 +99,7 @@ class KakaoCallback(APIView):
             errMessage, loginStatus = e.args
             print(errMessage)
         finally:
-            return redirect(settings.FRONT_SERVER, status=loginStatus)
+            return redirect(settings.BASE_URL['URL'], status=loginStatus)
 
     def __getAccessToken(self, request):
         tokenParameter = { }
@@ -159,7 +159,7 @@ class NaverCallback(APIView):
             errMessage, loginStatus = e.args
             print(errMessage)
         finally:
-            return redirect(settings.FRONT_SERVER, status=loginStatus)
+            return redirect(settings.BASE_URL['URL'], status=loginStatus)
 
     def __getAccessToken(self, request):
         tokenParameter = { }
