@@ -8,7 +8,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>SweetChem : Find your reagent information!</title>
+    <title>SweetChem : Find your Reagent Information</title>
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom fonts for this template -->
@@ -46,20 +46,6 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#Query_Data"
-              >Main <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#About">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#How_To_Use">How To Use?</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Members">Members</a>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -75,10 +61,17 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="#">Reagent Information</a>
               <a class="dropdown-item" href="#">NMR Analysis (Later)</a>
-              <a class="dropdown-item" href="#"
-                >Verify your Computational File (Later)</a
-              >
+              <a class="dropdown-item" href="#">Verify your Computational File (Later)</a>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#About">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#How_To_Use">How To Use?</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Members">Members</a>
           </li>
         </ul>
         <form
@@ -90,7 +83,7 @@
             class="btn btn-secondary my-2 my-sm-0"
             style="margin-right: 10px"
           >
-            Sign In
+            Login
           </button>
         </form>
       </div>
@@ -102,8 +95,7 @@
         <div class="row">
           <div class="col-xl-9 mx-auto">
             <h1 class="mb-5">
-              Study with Our Platform <br />
-              about Chemistry Report!
+              Study Chemistry with us!
             </h1>
           </div>
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
@@ -132,34 +124,53 @@
       </div>
     </header>
 
+    <!-- Tutorial -->
+    <section class="showcase" id="How_To_Use">
+      <div class="container">
+        <div class="row no-gutters">
+          <div 
+            class="col-lg-6 order-lg-2 text-white showcase-img"
+            style="background-image: url('/static/images/tutorial/step1.gif')"
+          >
+          </div>
+          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+            <h2>Input Your Reagent</h2>
+            <p class="lead mb-0">
+              시약 formula나 IUPAC 이름을 이용해서 입력해주세요
+            </p>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div
+            class="col-lg-6 order-lg-1 text-white showcase-img"
+            style="background-image: url('/static/images/tutorial/step2.gif')"
+          ></div>
+          <div class="col-lg-6 order-lg-2 my-auto showcase-text">
+            <h2>See Data Table</h2>
+            <p class="lead mb-0">
+              여러분들이 입력한 시약에 관한 정보들을 검색하지 않아도 SweetChem을 이용해서 간편하게 확인할 수 있습니다
+            </p>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div
+            class="col-lg-6 order-lg-2 text-white showcase-img"
+            style="background-image: url('/static/images/tutorial/step3.gif')"
+          ></div>
+          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+            <h2>Check Reagent's Danger</h2>
+            <p class="lead mb-0">
+              여러분들이 실제로 쓰고 있는 시약들이 어떤 유해성을 가지는지 확인해보세요!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Icons Grid -->
     <section class="features-icons bg-light text-center" id="About">
       <div class="container">
         <div class="row">
-          <div class="col-lg-4">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="icon-screen-desktop m-auto text-primary"></i>
-                <i class="fas fa-mobile-alt m-auto text-primary"></i>
-              </div>
-              <h3>Accesbility</h3>
-              <p class="lead mb-0">
-                SweetChem은 노트북, 태블릿, 모바일로 24시간 접속이 가능합니다.
-              </p>
-            </div>
-          </div>
-          <div class="col-lg-4">
-            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-              <div class="features-icons-icon d-flex">
-                <i class="fas fa-database m-auto text-primary"></i>
-              </div>
-              <h3>Store your data</h3>
-              <p class="lead mb-0">
-                SweetChem은 여러분들이 사용한 정보 및 데이터들을 저장하고 새로운
-                결과물을 보여줍니다.
-              </p>
-            </div>
-          </div>
           <div class="col-lg-4">
             <div class="features-icons-item mx-auto mb-0 mb-lg-3">
               <div class="features-icons-icon d-flex">
@@ -171,69 +182,47 @@
               </p>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Image Showcases -->
-    <section class="showcase" id="How_To_Use">
-      <div class="container">
-        <div class="row no-gutters">
-          <div
-            class="col-lg-6 order-lg-2 text-white showcase-img"
-          >
-            <div class="text-center">
-              <img class = "img-fluid" src="/static/images/bg-showcase-1.jpg" />
-            </div>  
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="icon-screen-desktop m-auto text-primary"></i>
+                <i class="fas fa-mobile-alt m-auto text-primary"></i>
+              </div>
+              <h3>Accesbility</h3>
+              <p class="lead mb-0">
+                노트북, 태블릿, 모바일로 24시간 접속이 가능합니다.
+              </p>
+            </div>
           </div>
-          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Input Your Reagent</h2>
-            <p class="lead mb-0">
-              시약 formula나 IUPAC 이름을 , 을 이용해서 입력해주세요
-            </p>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div
-            class="col-lg-6 text-white showcase-img"
-            style="background-image: url('/static/images/bg-showcase-2.jpg')"
-          ></div>
-          <div class="col-lg-6 my-auto showcase-text">
-            <h2>See Data Table</h2>
-            <p class="lead mb-0">
-              여러분들이 입력한 시약에 관한 정보들을 검색하지 않아도 SweetChem을
-              이용해서 간편하게 확인할 수 있습니다
-            </p>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div
-            class="col-lg-6 order-lg-2 text-white showcase-img"
-            style="background-image: url('/static/images/bg-showcase-3.jpg')"
-          ></div>
-          <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-            <h2>Watch Your Reagent's Danger</h2>
-            <p class="lead mb-0">
-              여러분들이 실제로 쓰고 있는 시약들이 실제로 어떤 유해성을 가지는지
-              확인해보세요!
-            </p>
+          <div class="col-lg-4">
+            <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+              <div class="features-icons-icon d-flex">
+                <i class="fas fa-database m-auto text-primary"></i>
+              </div>
+              <h3>Store your Data</h3>
+              <p class="lead mb-0">
+                여러분들이 사용한 정보 및 데이터들을 저장하고 유의미한 데이터를 보여줍니다.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials text-center bg-light" id="Members">
+    <section class="testimonials text-center" id="Members">
       <div class="container">
-        <h2 class="mb-5">What people are saying...</h2>
+        <h2 class="mb-5">Contributors</h2>
         <div class="row">
           <div class="col-lg-4">
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-              <img
-                class="img-fluid rounded-circle mb-3"
-                src="/static/images/testimonials-1.jpg"
-                alt=""
-              />
+                <a href="https://github.com/yoomambo">
+                  <img
+                    class="img-fluid rounded-circle mb-3"
+                    src="/static/images/contributors/mambo.jpg"
+                    alt=""
+                  />
+                </a>
               <h5>Mambo</h5>
               <p class="font-weight-light mb-0">
                 <li>2013 ~ 2020 : [Applied Chemistry] KyungHee Univ</li>
@@ -246,11 +235,13 @@
           </div>
           <div class="col-lg-4">
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-              <img
-                class="img-fluid rounded-circle mb-3"
-                src="/static/images/testimonials-2.jpg"
-                alt=""
-              />
+              <a href="https://github.com/4Moyede">
+                <img
+                  class="img-fluid rounded-circle mb-3"
+                  src="/static/images/contributors/4moyede.jpg"
+                  alt=""
+                />
+              </a>
               <h5>4Moyede</h5>
               <p class="font-weight-light mb-0">
                 <li>2014 ~ 2021 : [Computer Science] KyungHee Univ</li>
@@ -259,11 +250,13 @@
           </div>
           <div class="col-lg-4">
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-              <img
-                class="img-fluid rounded-circle mb-3"
-                src="/static/images/testimonials-3.jpg"
-                alt=""
-              />
+              <a href="https://github.com/r4576">
+                <img
+                  class="img-fluid rounded-circle mb-3"
+                  src="/static/images/contributors/r4576.jpg"
+                  alt=""
+                />
+              </a>
               <h5>Dae Ho</h5>
               <p class="font-weight-light mb-0">
                 <li>2017 ~ : [Applied Chemistry] KyungHee Univ</li>
@@ -279,59 +272,9 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
-            <ul class="list-inline mb-2">
-              <li class="list-inline-item">
-                <a href="#Query_Data">Main</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#About">About</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#Contact_Us">Contact Us</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#How_To_Use">How To Use?</a>
-              </li>
-              <li class="list-inline-item">&sdot;</li>
-              <li class="list-inline-item">
-                <a href="#Members">Members</a>
-              </li>
-            </ul>
             <p class="text-muted small mb-4 mb-lg-0">
               &copy; Our Website 2020. All Rights Reserved.
             </p>
-          </div>
-          <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
-            <ul class="list-inline mb-0">
-              <li class="list-inline-item mr-3">
-                <a href="https://github.com/r4576/ReagentPlatform">
-                  <i class="fab fa-github fa-2x fa-fw"></i>
-                </a>
-              </li>
-              <li class="list-inline-item mr-3">
-                <a href="#Query_Data">
-                  <i class="fab fa-html5 fa-2x fa-fw"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="##Query_Data">
-                  <i class="fab fa-css3-alt fa-2x fa-fw"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#Query_Data">
-                  <i class="fab fa-js-square fa-2x fa-fw"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a href="#Query_Data">
-                  <i class="fab fa-python fa-2x fa-fw"></i>
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
