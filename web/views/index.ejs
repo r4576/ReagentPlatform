@@ -10,11 +10,11 @@
     <meta name="author" content="" />
     <title>SweetChem : Find your reagent information!</title>
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <link
-      href="vendor/simple-line-icons/css/simple-line-icons.css"
+      href="/static/vendor/simple-line-icons/css/simple-line-icons.css"
       rel="stylesheet"
       type="text/css"
     />
@@ -24,7 +24,7 @@
       type="text/css"
     />
     <!-- Custom styles for this template -->
-    <link href="css/landing-page.min.css" rel="stylesheet" />
+    <link href="/static/css/landing-page.min.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -60,9 +60,6 @@
           <li class="nav-item">
             <a class="nav-link" href="#Members">Members</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#Contact_Us">Contact Us</a>
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -82,15 +79,6 @@
                 >Verify your Computational File (Later)</a
               >
             </div>
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link disabled"
-              href="#"
-              tabindex="-1"
-              aria-disabled="true"
-              >Later</a
-            >
           </li>
         </ul>
         <form
@@ -119,14 +107,14 @@
             </h1>
           </div>
           <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form action="/tables" method="GET">
+            <form action="/contents/reagent" method="GET">
               <div class="form-row">
                 <div class="col-12 col-md-9 mb-2 mb-md-0">
                   <input
                     type="text"
                     class="form-control form-control-lg"
                     placeholder="Input Your Reagent"
-                    name="reagent"
+                    name="keyword"
                   />
                 </div>
                 <div class="col-12 col-md-3">
@@ -195,7 +183,7 @@
             class="col-lg-6 order-lg-2 text-white showcase-img"
           >
             <div class="text-center">
-              <img class = "img-fluid" src="images/bg-showcase-1.jpg" />
+              <img class = "img-fluid" src="/static/images/bg-showcase-1.jpg" />
             </div>  
           </div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
@@ -208,7 +196,7 @@
         <div class="row no-gutters">
           <div
             class="col-lg-6 text-white showcase-img"
-            style="background-image: url('images/bg-showcase-2.jpg')"
+            style="background-image: url('/static/images/bg-showcase-2.jpg')"
           ></div>
           <div class="col-lg-6 my-auto showcase-text">
             <h2>See Data Table</h2>
@@ -221,7 +209,7 @@
         <div class="row no-gutters">
           <div
             class="col-lg-6 order-lg-2 text-white showcase-img"
-            style="background-image: url('images/bg-showcase-3.jpg')"
+            style="background-image: url('/static/images/bg-showcase-3.jpg')"
           ></div>
           <div class="col-lg-6 order-lg-1 my-auto showcase-text">
             <h2>Watch Your Reagent's Danger</h2>
@@ -243,7 +231,7 @@
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
               <img
                 class="img-fluid rounded-circle mb-3"
-                src="images/testimonials-1.jpg"
+                src="/static/images/testimonials-1.jpg"
                 alt=""
               />
               <h5>Mambo</h5>
@@ -260,7 +248,7 @@
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
               <img
                 class="img-fluid rounded-circle mb-3"
-                src="images/testimonials-2.jpg"
+                src="/static/images/testimonials-2.jpg"
                 alt=""
               />
               <h5>4Moyede</h5>
@@ -273,7 +261,7 @@
             <div class="testimonial-item mx-auto mb-5 mb-lg-0">
               <img
                 class="img-fluid rounded-circle mb-3"
-                src="images/testimonials-3.jpg"
+                src="/static/images/testimonials-3.jpg"
                 alt=""
               />
               <h5>Dae Ho</h5>
@@ -281,39 +269,6 @@
                 <li>2017 ~ : [Applied Chemistry] KyungHee Univ</li>
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="call-to-action text-white text-center" id="Contact_Us">
-      <div class="overlay"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-9 mx-auto">
-            <h2 class="mb-4">If you want to join us? Submit now!</h2>
-          </div>
-          <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <form>
-              <div class="form-row">
-                <div class="col-12 col-md-9 mb-2 mb-md-0">
-                  <input
-                    type="email"
-                    class="form-control form-control-lg"
-                    placeholder="Enter your email..."
-                  />
-                </div>
-                <div class="col-12 col-md-3">
-                  <button
-                    type="submit"
-                    class="btn btn-block btn-lg btn-primary"
-                  >
-                    Submit!
-                  </button>
-                </div>
-              </div>
-            </form>
           </div>
         </div>
       </div>
@@ -383,7 +338,7 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

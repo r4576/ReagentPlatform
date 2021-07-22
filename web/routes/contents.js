@@ -7,8 +7,8 @@ var baseDir = path.dirname(__dirname);
 var networkFile = path.join(path.join(baseDir, 'keys'), 'networks.json');
 var network = require(networkFile);
 
-router.get("/", function (req, res, next) {
-  let reagent = req.query.reagent;
+router.get("/reagent", function (req, res, next) {
+  let reagent = req.query.keyword;
   request({
       method: "GET",
       uri: network['apiServer']['URL'] + ":" + network['apiServer']['Port'] + "/api/search?keyword=" + reagent,
@@ -31,7 +31,7 @@ router.get("/", function (req, res, next) {
           };
           data.push(result);
         }
-        res.render("tables", { data: data });
+        res.render("reagent", { data: data });
       }
     }
   );
