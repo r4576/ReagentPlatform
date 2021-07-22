@@ -10,11 +10,11 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Reagent Plaform - Tables</title>
+    <title>SweetChem - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link
-      href="vendor/fontawesome-free/css/all.min.css"
+      href="/static/vendor/fontawesome-free/css/all.min.css"
       rel="stylesheet"
       type="text/css"
     />
@@ -24,14 +24,13 @@
     />
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="/static/css/sb-admin-2.min.css" rel="stylesheet" />
 
     <!-- Custom styles for this page -->
     <link
-      href="vendor/datatables/dataTables.bootstrap4.min.css"
+      href="/static/vendor/datatables/dataTables.bootstrap4.min.css"
       rel="stylesheet"
     />
-    <script src="javascripts/index_function.js"></script>
   </head>
 
   <body id="page-top">
@@ -51,25 +50,11 @@
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
-          <button class="btn btn-primary">Reagent Platform</button>
+          <button class="btn btn-primary">SweetChem</button>
         </form>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0" />
-
-        <!-- Heading -->
-        <div class="sidebar-heading">Main</div>
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-          <form class="nav-link" action="/" method="GET">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <button class="btn btn-primary">Main Page</button>
-          </form>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider" />
 
         <!-- Heading -->
         <div class="sidebar-heading">Contents</div>
@@ -199,7 +184,7 @@
 
               <div class="topbar-divider d-none d-sm-block"></div>
 
-               <!-- Nav Item - User Information -->
+               <!-- Nav Item - User Information --> 
               <li class="nav-item dropdown no-arrow">
                 <a
                   class="nav-link dropdown-toggle"
@@ -210,12 +195,12 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    ><%= %></span
-                  >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    test-user
+                  </span>
                   <img
                     class="img-profile rounded-circle"
-                    src="images/undraw_profile_2.svg"
+                    src="/static/images/profile.svg"
                   />
                 </a>
                 <!-- Dropdown - User Information -->
@@ -227,14 +212,6 @@
                   "
                   aria-labelledby="userDropdown"
                 >
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                  </a>
                   <a class="dropdown-item" href="#">
                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                     Activity Log
@@ -357,7 +334,7 @@
                                 <h5>NFPA</h5>
                                 <hr />
                                 <div class="text-center">
-                                  <img class="img-fluid" src="images/NFPA.jpg" />
+                                  <img class="img-fluid" src="/static/images/NFPA.jpg" />
                                 </div>
                                 <hr />
                                 <div class="row">
@@ -716,19 +693,19 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
     <!-- Core plugin JavaScript-->
-    <script src="javascripts/sb-admin-2.js"></script>
+    <script src="/static/javascripts/sb-admin-2.js"></script>
     <!-- Custom scripts for all pages-->
-    <script src="javascripts/sb-admin-2.min.js"></script>
+    <script src="/static/javascripts/sb-admin-2.min.js"></script>
     <!-- Page level plugins -->
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="/static/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="javascripts/data_visualization/datatables-demo.js"></script>
-    <script src="javascripts/index_function.js"></script>
+    <script src="/static/javascripts/data_visualization/datatables-demo.js"></script>
+    <script src="/static/javascripts/index_function.js"></script>
   </body>
 </html>

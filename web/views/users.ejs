@@ -4,72 +4,71 @@
     <title>Login Page</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="icon" type="image/png" href="/static/images/icons/favicon.ico" />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/bootstrap/css/bootstrap.min.css"
+      href="/static/vendor/bootstrap/css/bootstrap.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="/login/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
+      href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/animate/animate.css"
+      href="/static/vendor/animate/animate.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/css-hamburgers/hamburgers.min.css"
+      href="/static/vendor/css-hamburgers/hamburgers.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/animsition/css/animsition.min.css"
+      href="/static/vendor/animsition/css/animsition.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/select2/select2.min.css"
+      href="/static/vendor/select2/select2.min.css"
     />
     <link
       rel="stylesheet"
       type="text/css"
-      href="login/vendor/daterangepicker/daterangepicker.css"
+      href="/static/vendor/daterangepicker/daterangepicker.css"
     />
-    <link rel="stylesheet" type="text/css" href="login/stylesheets/util.css" />
-    <link rel="stylesheet" type="text/css" href="login/stylesheets/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/users.css" />
   </head>
   <body>
     <div class="limiter">
       <div
         class="container-login100"
-        style="background-image: url('images/bg-01.jpg')"
+        style="background-image: url('/static/images/bg-login.jpg')"
       >
         <div class="wrap-login100 p-l-70 p-r-70 p-t-62 p-b-33">
           <form class="login100-form validate-form flex-col flex-w">
             <span class="login100-form-title p-b-53"> Sign In With </span>
 
             <a href="<%= loginURL['google'] %>" class="btn-google m-b-20">
-              <img src="images/icons/icon-google.png" alt="GOOGLE" />
+              <img src="/static/images/icons/icon-google.png" alt="GOOGLE" />
               Google
             </a>
 
             <a href="<%= loginURL['naver'] %>" class="btn-google m-b-20">
-              <img src="images/icons/icon-naver.ico" alt="NAVER" />
+              <img src="/static/images/icons/icon-naver.ico" alt="NAVER" />
               Naver
             </a>
 
             <a href="<%= loginURL['kakao'] %>" class="btn-google m-b-20">
-              <img src="images/icons/icon-kakaotalk.ico" alt="KAKAOTALK" />
+              <img src="/static/images/icons/icon-kakaotalk.ico" alt="KAKAOTALK" />
               KakaoTalk
             </a>
 
@@ -83,14 +82,13 @@
       </div>
     </div>
 
-    <script src="login/vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="login/vendor/animsition/js/animsition.min.js"></script>
-    <script src="login/vendor/bootstrap/js/popper.js"></script>
-    <script src="login/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="login/vendor/select2/select2.min.js"></script>
-    <script src="login/vendor/daterangepicker/moment.min.js"></script>
-    <script src="login/vendor/daterangepicker/daterangepicker.js"></script>
-    <script src="login/vendor/countdowntime/countdowntime.js"></script>
-    <script src="javascripts/main.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/animsition/js/animsition.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/popper.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/vendor/select2/select2.min.js"></script>
+    <script src="/static/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/static/vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="/static/vendor/countdowntime/countdowntime.js"></script>
   </body>
 </html>

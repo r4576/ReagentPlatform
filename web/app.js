@@ -5,15 +5,10 @@ var path = require("path");
 var createError = require("http-errors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var dateFormat = require("dateformat");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var tablesRouter = require("./routes/tables");
-var chartsRouter = require("./routes/charts");
-// var reagentRouter = require("./routes/reagent");
-// var nmrRouter = require("./routes/nmr");
-// var catalystRouter = require("./routes/catalyst");
+var contentRouter = require("./routes/contents");
 
 var app = express();
 
@@ -29,8 +24,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/tables", tablesRouter);
-app.use("/charts", chartsRouter);
+app.use("/contents", contentRouter);
+
+app.use("/static", express.static(path.join(__dirname, "public")));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -40,7 +36,6 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  console.log("[" + dateFormat(new Date(), "dd/mmm/yyyy HH:MM:ss") + "] " + err.message);
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
